@@ -1,0 +1,31 @@
+﻿.table {
+    font-size: 15px;
+}
+
+th, td {
+    border: 1px solid #d1c5c591;
+}
+
+    td a {
+        padding: 0 3px;
+        zoom: 1.3;
+    }
+    td img {
+        width: 20%;
+    }
+
+i.fa-edit{
+    color:blue;
+}
+i.fa-eye{
+    color:greenyellow;
+}
+i.fa-trash-alt{
+    color:red;
+}
+.line-clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
