@@ -1,0 +1,100 @@
+.info-user .container {
+    background: #fff;
+    width: 540px;
+    height: 450px;
+    margin: 0px auto;
+    position: relative;
+    margin-top: 20px;
+    box-shadow: 2px 5px 20px rgba(119, 119, 119, 0.5);
+}
+
+.info-user .container .left-box {
+    float: left;
+    top: -5%;
+    left: 5%;
+    position: absolute;
+    width: 15%;
+    height: 110%;
+    background: #2ed573;
+    box-shadow: 3px 3px 10px rgba(119, 119, 119, 0.5);
+    border: .1em solid #fff;
+}
+
+.info-user .container nav a {
+    padding: 35px;
+    list-style: none;
+    color: #fff;
+    font-size: 1.1em;
+    display: block;
+    transition: all 0.3s ease-in-out;
+}
+
+.info-user .container nav a:hover {
+    color: #10ac84;
+    cursor: pointer;
+    transform: scale(1.2);
+}
+.info-user .container nav a:first-child {
+    margin-top: 7px;
+}
+
+.info-user .container nav a.active {
+    color: #10ac84;
+}
+
+.info-user .container .right-box {
+    width: 68%;
+    margin-left: 27%;
+}
+
+.info-user .container .right-box .tab-show {
+    transition: all 0.5s ease-in;
+    width: 80%;
+    position: absolute;
+}
+.info-user .container .right-box .tab-show h1 {
+    font-size: 1.2rem;
+    font-family: "Montserrat", sans-serif;
+    color: #7ed386;
+    margin-top: 40px;
+    margin-bottom: 35px;
+}
+.info-user .container .right-box .tab-show h2 {
+    font-size: 8px;
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-left: 2px;
+    margin-top: 10px;
+}
+.info-user .container .input, .info-user .container p {
+    border: 0;
+    border-bottom: 1px solid #3fb6a8;
+    width: 80%;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.7em;
+    padding:  7px 0;
+    color: #070707;
+    outline: none;
+}
+
+.info-user .container span {
+    font-size: 0.7em;
+    color: #777;
+}
+
+.info-user .container .btn {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    font-size: 15px;
+    border: 0;
+    color: #fff;
+    background: #7ed386;
+    padding: 7px 15px;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    margin-top: 15px;
+}
+.info-user .container .right-box .tab-show {
+    display: none;
+}

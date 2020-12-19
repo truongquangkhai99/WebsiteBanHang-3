@@ -1,0 +1,150 @@
+@import
+	url("https://fonts.googleapis.com/css2?family=Muli:wght@400;700&display=swap")
+	;
+
+.reviews {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+	width: 100%;
+	border-radius: 10px;
+	background-color: white;
+	padding: 15px 0 10px 0;
+}
+
+.reviews__heading {
+	font-size: 32px;
+	color: #323357;
+	font-family: "Muli";
+	font-weight: 700;
+	text-align: center;
+	margin: 28px 0;
+}
+
+.reviews__average-ratings {
+	margin-bottom: 63px;
+}
+
+.average-ratings__stars {
+	display: flex;
+	align-items: center;
+	padding: 0 25px;
+	width: 347px;
+	height: 63px;
+	border-radius: 32px;
+	background-color: #f5f8ff;
+	margin-bottom: 8px;
+}
+
+.stars__average-rating-score {
+	font-size: 16px;
+	color: #323357;
+	font-family: "Muli";
+	font-weight: 400;
+	margin-left: auto;
+}
+
+.average-ratings__total-customers {
+	font-size: 16px;
+	color: #595b71;
+	font-family: "Muli";
+	font-weight: 400;
+	text-align: center;
+}
+
+.reviews__breakdown {
+	display: flex;
+	margin-bottom: 44px;
+}
+
+.reviews-breakdown__wrapper {
+	margin: 0 auto;
+}
+
+.reviews__single-star-average {
+	display: flex;
+	margin: 22px 0;
+}
+
+.reviews__single-star-average:first-child {
+	margin-top: 0;
+}
+
+.single-star-average__amount {
+	font-size: 18px;
+	color: #2a5bda;
+	font-family: "Muli";
+	font-weight: 400;
+}
+
+.single-star-average__progress-bar {
+	max-width: 280px;
+	width: 280px;
+	border-radius: 10px;
+	background-color: #f5f8ff;
+	padding: 1px;
+	margin: 0 10px;
+}
+
+.progress-bar__data {
+	width: 100%;
+	height: 100%;
+	padding: 2px;
+	appearance: none;
+	border: none;
+}
+
+.progress-bar__data[value]::-webkit-progress-bar {
+	background-color: whiteSmoke;
+	border-radius: 10px;
+}
+
+.progress-bar__data[value]::-webkit-progress-value {
+	border-radius: 8px;
+	filter: drop-shadow(0px 4px 5px rgba(255, 204, 72, 0.53));
+	background: #ffcc48;
+}
+
+.single-star-average__percentage {
+	font-size: 18px;
+	color: #323357;
+	font-family: "Muli";
+	font-weight: 400;
+}
+
+.calculation-info__desc {
+	font-size: 16px;
+	color: #2a5bda;
+	font-family: "Muli";
+	font-weight: 400;
+}
+
+.info-user-review {
+	padding: 0 30px;
+}
+
+.info-user-review div img {
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	border: 1px solid #a8a5a5;
+}
+
+.info-user-review div .info {
+	margin-left: 10px;
+}
+
+.info-user-review div .info span {
+	font-size: 14px;
+	opacity: 0.6;
+}
+
+.info-user-review div .info p {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.info-user-review .review-of-user {
+	padding: 15px;
+}
