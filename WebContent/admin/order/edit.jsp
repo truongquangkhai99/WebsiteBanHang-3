@@ -1,10 +1,10 @@
 <%@page import="java.util.Map"%>
 <%@page import="dao.OrderDAO"%>
 <%@page import="model.Order"%>
-<%@page import="dao.ProductDAO"%>
-<%@page import="model.Product"%>
-<%@page import="dao.KhachHangDAO"%>
-<%@page import="model.KhachHang"%>
+<%@page import="dao.BookDAO"%>
+<%@page import="model.Book"%>
+<%@page import="dao.UserDAO"%>
+<%@page import="model.User"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 	<%	String id = request.getParameter("id");
@@ -128,17 +128,17 @@
 		<div class="">
 		</div>
 		  <div class="form-center">
-		          <form  class="form-horizontal" action="../Order?chucNang=Edit&masp=<%=od.getOrderID()%> " method="post" id="editorderID">
+		          <form  class="form-horizontal" action="../Order?chucNang=Edit&masp=<%=od.getId()%> " method="post" id="editorderID">
 		            <div class="form-group">
 		              <label class="control-label col-sm-2" for=""><span class=""></span> Tên sản phẩm:</label>
 		              <div class="col-sm-10">
 						<div class="row">
 							<div class="col-sm-8">
-								<input type="text"  list="listProduct" class="form-control"  value="<%=od.getProductID()%>" name="pdName" placeholder="Tên sản phẩm" id="name">
+								<input type="text"  list="listProduct" class="form-control"  value="<%=od.getId()%>" name="pdName" placeholder="Tên sản phẩm" id="name">
 								<datalist id="listProduct">
-									<%Map<String, Product> mapListProduct = ProductDAO.mapProduct ;
-									for (Product kh : mapListProduct.values()) { %>
-										<option value="<%=kh.getProductID()%>"><%=kh.getProductName() %></option>
+									<%Map<String, Book> mapListProduct = BookDAO.mapSanPham ;
+									for (Book kh : mapListProduct.values()) { %>
+										<option value="<%=kh.getId()%>"><%=kh.getTitle() %></option>
 									<%} %>
 								</datalist>
 							
@@ -157,12 +157,12 @@
 		              <div class="col-sm-10">
 						<div class="row">
 							<div class="col-sm-8">
-								 <input type="text" list="listcustomer" class="form-control"  value="<%=od.getCustomerID()%>" name="name" placeholder="Nhập tên khách hàng" id="account">
+								 <input type="text" list="listcustomer" class="form-control"  value="<%=od.getUser_id()%>" name="name" placeholder="Nhập tên khách hàng" id="account">
 							
 									<datalist id="listcustomer">
-								    <%Map<String, KhachHang> mapListCustomer = KhachHangDAO.mapKhachHang; %>
-								<%	for (KhachHang kh : mapListCustomer.values()) { %>
-										<option value="<%=kh.getMaKH()%>"><%=kh.getTenKH() %></option>
+								    <%Map<String, User> mapListCustomer = UserDAO.mapKhachHang; %>
+								<%	for (User kh : mapListCustomer.values()) { %>
+										<option value="<%=kh.getId()%>"><%=kh.getName() %></option>
 									<%} %>
 									</datalist>
 							</div>
@@ -181,7 +181,7 @@
 		              <div class="col-sm-10">
 						<div class="row">
 							<div class="col-sm-8">
-								<input type="date" class="form-control"  value="<%=od.getDate()%>" name="date" placeholder="Chọn ngày đặt hàng" id="date">
+								<input type="date" class="form-control"  value="<%=od.getOrder_date()%>" name="date" placeholder="Chọn ngày đặt hàng" id="date">
 							</div>
 							<div class="col-sm-2">
 								<p id="icon-date"></p>
@@ -197,7 +197,7 @@
 		              <div class="col-sm-10">
 						<div class="row">
 							<div class="col-sm-8">
-								<input type="text" class="form-control"  value="<%=od.getTotalPrice()%>" name="price" placeholder="Nhập giá tiền" id="cost">
+								<input type="text" class="form-control"  value="<%=od.getTotal()%>" name="price" placeholder="Nhập giá tiền" id="cost">
 							</div>
 							<div class="col-sm-2">
 								<p id="icon-cost"></p>

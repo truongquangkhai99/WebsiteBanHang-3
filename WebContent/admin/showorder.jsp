@@ -1,9 +1,9 @@
+<%@page import="dao.UserDAO"%>
+<%@page import="dao.BookDAO"%>
+<%@page import="model.User"%>
+<%@page import="java.awt.print.Book"%>
 <%@page import="java.util.Set"%>
-<%@page import="model.KhachHang"%>
-<%@page import="model.Product"%>
 <%@page import="dao.UndoDAO"%>
-<%@page import="dao.KhachHangDAO"%>
-<%@page import="dao.ProductDAO"%>
 <%@page import="dao.OrderDAO"%>
 <%@page import="model.Order"%>
 <%@page import="java.util.ArrayList"%>
@@ -14,8 +14,8 @@
 
 <%
 	Map<String, Order> mapListOrder = OrderDAO.mapOrder;
-	Product a=null;
-	KhachHang b =null;
+	Book a=null;
+	User b =null;
 	Set<String> setDateOrder =  OrderDAO.setDateOrder;
 %>
 <!DOCTYPE html>
@@ -28,26 +28,26 @@
   		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link rel="shortcut icon" href="img/icon2.jpg" />
 		<!-- Bootstrap -->
-		<link href="vendors/bootstrap/dist/css/bootstrap.min.css"
+		<link href="../vendors/bootstrap/dist/css/bootstrap.min.css"
 	rel="stylesheet">
 <!-- Font Awesome -->
-<link href="vendors/font-awesome/css/font-awesome.min.css"
+<link href="../vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
 
 <!-- Datatables -->
-<link href="vendors/datatables.net-bs/css/dataTables.bootstrap.min.css"
+<link href="../vendors/datatables.net-bs/css/dataTables.bootstrap.min.css"
 	rel="stylesheet">
 <link
-	href="vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css"
+	href="../vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css"
 	rel="stylesheet">
 <link
-	href="vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css"
+	href="../vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css"
 	rel="stylesheet">
 <link
-	href="vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css"
+	href="../vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css"
 	rel="stylesheet">
 <link
-	href="vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css"
+	href="../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css"
 	rel="stylesheet">
 <style type="text/css">
 th {
@@ -127,17 +127,17 @@ th {
 					%>
 					<tr>
 						<td><%=count%></td>
-						<td><%out.print(new ProductDAO().getNameProduct(od.getProductID()));%></td>
-						<td><%out.print(new KhachHangDAO().getNameCustomer(od.getCustomerID()));%></td>
-						<td><%=od.getDate()%></td>
-						<td><%=od.getTotalPrice()%></td>
-						<td><a href="Order?chucNang=Delete&id=<%=od.getOrderID()%>">
+						<td><%out.print(new BookDAO().getNameBook(od.getId()));%></td>
+						<td><%out.print(new UserDAO().getNameCustomer(od.getId()));%></td>
+						<td><%=od.getOrder_date()%></td>
+						<td><%=od.getTotal()%></td>
+						<td><a href="Order?chucNang=Delete&id=<%=od.getId()%>">
 								<button type="button" class="btn btn-sm btn-danger" id=""
 									aria-label="Right Align">
 									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 								</button>
 						</a></td>
-						<td>	<a href="order/order.jsp?id=<%=od.getOrderID()%>&chucNang=Edit"><button type="button" class="btn  btn-sm btn-warning"
+						<td>	<a href="order/order.jsp?id=<%=od.getId()%>&chucNang=Edit"><button type="button" class="btn  btn-sm btn-warning"
 									aria-label="Right Align">
 									<span class="glyphicon glyphicon-edit"></span>
 								</button></a>
@@ -155,24 +155,24 @@ th {
 </body>
 
 <!-- jQuery -->
-<script src="vendors/jquery/dist/jquery.min.js"></script>
+<script src="../vendors/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap -->
-<script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- FastClick -->
 
 <!-- Datatables -->
-<script src="vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="../vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script
-	src="vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+	src="../vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
 <script
-	src="vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-<script src="vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-<script src="vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-<script src="vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+	src="../vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="../vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="../vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="../vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
 
 <!-- Custom Theme Scripts -->
-<script src="build/js/custom.min.js"></script>
+<script src="../build/js/custom.min.js"></script>
 
 
 

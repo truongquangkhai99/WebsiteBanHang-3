@@ -41,6 +41,16 @@ public class BookDAO implements ObjectDAO {
 		return true;
 	}
 
+	public String getNameBook(String id) {
+		String name = "";
+		for (Book kh : mapSanPham.values()) {
+			if (kh.getId().equals(id)) {
+				name = kh.getTitle();
+			}
+		}
+		return name;
+	}
+
 	public static Map<String, Book> layDuLieuTuDatabase() {
 		Map<String, Book> map = new HashMap<>();
 		try {

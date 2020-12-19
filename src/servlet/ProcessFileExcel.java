@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -13,11 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import dao.FileDAO;
 import dao.UserDAO;
 import dao.OrderDAO;
-import dao.ProductDAO;
-import javafx.print.Printer;
-import model.KhachHang;
+import dao.BookDAO;
+import model.User;
 import model.Order;
-import model.Product;
+import model.Book;
 
 @WebServlet("/Excel")
 public class ProcessFileExcel extends HttpServlet {
@@ -42,9 +40,9 @@ public class ProcessFileExcel extends HttpServlet {
 		} else
 		// chức năng import khách hàng từ excel
 		if (chucNang.equals("Customer")) {
-			Map<String, KhachHang> mapCustomer = new FileDAO(text).getCustomer(new FileDAO(text).getStringArray());
+			Map<String, User> mapCustomer = new FileDAO(text).getCustomer(new FileDAO(text).getStringArray());
 			if(!mapCustomer.isEmpty()){
-				for (KhachHang customer : mapCustomer.values()) {
+				for (User customer : mapCustomer.values()) {
 					new UserDAO().add(customer);
 				}
 			}
@@ -52,10 +50,10 @@ public class ProcessFileExcel extends HttpServlet {
 		} else
 		// chức năng import sản phẩm từ excel
 		if (chucNang.equals("Product")) {
-			Map<String, Product> mapProduct = new FileDAO(text).getProduct(new FileDAO(text).getStringArray());
+			Map<String, Book> mapProduct = new FileDAO(text).getProduct(new FileDAO(text).getStringArray());
 			if(!mapProduct.isEmpty()){
-				for (Product sp : mapProduct.values()) {
-					new ProductDAO().add(sp);
+				for (Book sp : mapProduct.values()) {
+					new BookDAO().add(sp);
 				}
 			}
 			response.sendRedirect("showproduct.jsp");

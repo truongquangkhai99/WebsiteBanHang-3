@@ -18,7 +18,7 @@
 
     <body>
         <header>
-            <jsp:include page="/menu/header.jsp"></jsp:include>
+            <jsp:include page="menu/header.jsp"></jsp:include>
         </header>
     </body>
 

@@ -1,8 +1,8 @@
-<%@page import="dao.KhachHangDAO"%>
-<%@page import="model.KhachHang"%>
+<%@page import="model.Book"%>
+<%@page import="dao.BookDAO"%>
+<%@page import="dao.UserDAO"%>
+<%@page import="model.User"%>
 <%@page import="java.util.Map"%>
-<%@page import="dao.ProductDAO"%>
-<%@page import="model.Product"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -133,9 +133,9 @@ pageEncoding="utf-8"%>
 								
 								
 								<datalist id="listProduct">
-								<%Map<String, Product> mapListProduct = ProductDAO.mapProduct ;
-								for (Product kh : mapListProduct.values()) { %>
-									<option value="<%=kh.getProductID()%>"><%=kh.getProductName() %></option>
+								<%Map<String, Book> mapListProduct = BookDAO.mapSanPham;
+								for (Book book : mapListProduct.values()) { %>
+									<option value="<%=book.getId()%>"><%=book.getTitle() %></option>
 								<%} %>
 							</datalist>
 							
@@ -158,9 +158,9 @@ pageEncoding="utf-8"%>
 								<input type="text" class="form-control " list="listcustomer" value="" name="name" placeholder="Nhập tên khách hàng" id="account">
 							
 							<datalist id="listcustomer">
-							    <%Map<String, KhachHang> mapListCustomer = KhachHangDAO.mapKhachHang; %>
-							<%	for (KhachHang kh : mapListCustomer.values()) { %>
-									<option value="<%=kh.getMaKH()%>"><%=kh.getTenKH() %></option>
+							    <%Map<String, User> mapListCustomer = UserDAO.mapKhachHang; %>
+							<%	for (User kh : mapListCustomer.values()) { %>
+									<option value="<%=kh.getId()%>"><%=kh.getName() %></option>
 								<%} %>
 								</datalist>
 							

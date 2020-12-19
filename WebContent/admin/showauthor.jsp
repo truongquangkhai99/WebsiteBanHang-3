@@ -1,6 +1,6 @@
-<%@page import="dao.UserDAO"%>
+<%@page import="dao.AuthorDAO"%>
 <%@page import="dao.UndoDAO"%>
-<%@page import="model.User"%>
+<%@page import="model.Author"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import=" java.util.HashMap"%>
 <%@page import=" java.util.Map"%>
@@ -8,14 +8,12 @@
 	pageEncoding="utf-8"%>
 
 <%
-	//ArrayList<KhachHang> listCustomer = new KhachHangDAO().getKh(); 
-	HttpSession session2 = request.getSession();
-	Map<String, User> mapListKhachHang = UserDAO.mapKhachHang;
+	Map<String, Author> mapListTacGia = AuthorDAO.mapTacGia;
 %>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Quản lý khách hàng - TriThucOnline</title>
+<title>Quản lý tác giả - TriThucOnline</title>
 		<meta charset="utf-8">
  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
@@ -74,12 +72,12 @@
 <body>
     <header>
 <%--         <jsp:include page="menu/menu.jsp"></jsp:include> --%>
-        <jsp:include page="menu/header.jsp"></jsp:include>
+        <jsp:include page="./menu/header.jsp"></jsp:include>
     </header>
     <div class="container">
         <div class="row">
             <h2>
-                <strong>Quản lý khách hàng</strong>
+                <strong>Quản lý tác giả</strong>
             </h2>
         </div>
 <!--         <div class="row"> -->
@@ -106,21 +104,20 @@
             <table id="datatable-buttons" class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>STT</th>
-                        <th>Tên</th>
-                        <th>Tài khoản</th>
-                        <th>Mật khẩu</th>
-                        <th>Số điện thoại</th>
+                        <th>Mã</th>
+                        <th>Tên tác giả</th>
+                        <th>Ảnh tác giả</th>
+                        <th>Thông tin</th>
                         <th>Xóa</th>
                         <th>Sửa</th>
-                        <th>Thông tin</th>
+                        <th>Thông tin chi tiết</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <%
 						int count = 0;
-						for (User kh : mapListKhachHang.values()) {
+						for (Author kh : mapListTacGia.values()) {
 							count++;
 					%>
                         <tr>
@@ -131,15 +128,10 @@
                                 <%=kh.getName()%>
                             </td>
                             <td>
-                                <%=kh.getUsername()%>
+                                <%=kh.getPicture()%>
                             </td>
                             <td>
-                                <%
-								out.print("***********");
-							%>
-                            </td>
-                            <td>
-                                <%=kh.getPhone()%>
+                                <%=kh.getInfo()%>
                             </td>
                             <td>
                                 <a href="Process?chucNang=Delete&id=<%=kh.getId()%>">
@@ -148,12 +140,12 @@
 								</button>
                                 </a>
                             </td>
-                            <td> <a href="customer.jsp?id=<%=kh.getId()%>&chucNang=Edit"><button type="button" class="btn  btn-sm btn-warning"
+                            <td> <a href="author.jsp?id=<%=kh.getId()%>&chucNang=Edit"><button type="button" class="btn  btn-sm btn-warning"
 									aria-label="Right Align">
 									<span class="glyphicon glyphicon-edit"></span>
 								</button></a>
                             </td>
-                            <td> <a href="customer.jsp?id=<%=kh.getId()%>&chucNang=Info"><button type="button" class="btn  btn-sm btn-primary"
+                            <td> <a href="author.jsp?id=<%=kh.getId()%>&chucNang=Info"><button type="button" class="btn  btn-sm btn-primary"
 									aria-label="Right Align">
 										<span class="glyphicon glyphicon-info-sign" ></span>
 								</button></a>

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import dao.UserDAO;
 import dao.UndoDAO;
-import model.KhachHang;
+import model.User;
 
 @WebServlet("/Process")
 public class ProcessServlet extends HttpServlet {
@@ -59,7 +59,7 @@ public class ProcessServlet extends HttpServlet {
 			String pass=request.getParameter("pass");
 			String sdt=request.getParameter("sdt");
 			String ma=request.getParameter("makh");
-			KhachHang kh = new KhachHang(ma, tenKH, pass, sdt, tenTKKH);
+			User kh = new User(ma, tenKH, pass, sdt, tenTKKH);
 			new UserDAO().edit(kh);
 		}else
 			//chức năng thêm khách hàng
@@ -71,7 +71,7 @@ public class ProcessServlet extends HttpServlet {
 				String diaChi=request.getParameter("diachi");
 				String sdt=request.getParameter("sdt");
 				String ma="KH"+new UserDAO().random(3000);
-			KhachHang kh = new KhachHang(ma, tenKH, pass, sdt, tenTKKH);
+			User kh = new User(ma, tenKH, pass, sdt, tenTKKH);
 			new UserDAO().add( kh);
 		}
 		response.sendRedirect("showcustomer.jsp");

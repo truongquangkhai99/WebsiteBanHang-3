@@ -14,10 +14,10 @@ import javax.servlet.http.HttpSession;
 
 import dao.UserDAO;
 import dao.OrderDAO;
-import dao.ProductDAO;
+import dao.BookDAO;
 import model.User;
 import model.Order;
-import model.Product;
+import model.Book;
 
 @WebServlet("/Search")
 public class SearchProcessServlet extends HttpServlet {
@@ -39,7 +39,7 @@ public class SearchProcessServlet extends HttpServlet {
 		// chức năng chọn khách hàng
 		if (chucNang.equals("searchCustomer")) {
 			String id = request.getParameter("name");
-			KhachHang kh = new UserDAO().find(id);
+			User kh = new UserDAO().find(id);
 			ServletContext contextdisable = getServletContext();
 			contextdisable.setAttribute("disabledButton", "disabled");
 			session.setAttribute("KhachHang", kh);
@@ -48,26 +48,26 @@ public class SearchProcessServlet extends HttpServlet {
 		// chức năng lọc trả lại sản phẩm cho vào giỏ hàng
 		if (chucNang.equals("Add")) {
 			String id = request.getParameter("productID");
-			Product sp = new ProductDAO().findProductOrder(id);
+			Book sp = new BookDAO().findProductOrder(id);
 			if (sp != null) {
-				new ProductDAO().addProductOrder(sp);
+				new BookDAO().addProductOrder(sp);
 			}
 			response.sendRedirect("orderonline.jsp");
 
 		} else
 		// Chức năng xuất đơn hàng
 		if (chucNang.equals("OutOrder")) {
-			KhachHang kh = (KhachHang) session.getAttribute("KhachHang");
+			User kh = (User) session.getAttribute("KhachHang");
 
 			Date today = new Date(System.currentTimeMillis());
 			SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy");
 			String ngayGui = timeFormat.format(today.getTime());
-			Order dh = new Order("DH" + new ProductDAO().random(300) + "",  ProductDAO.getTotalProductOrder(),
-					kh.getMaKH(), ngayGui, new ProductDAO().tongGiaTienDatHang());
+			Order dh = new Order("DH" + new BookDAO().random(300) + "",  ProductDAO.getTotalProductOrder(),
+					kh.getMaKH(), ngayGui, new BookDAO().tongGiaTienDatHang());
 			try {
 				new OrderDAO().add(dh);
 				session.removeAttribute("KhachHang");
-				ProductDAO.mapProductOrder.clear();
+				BookDAO.mapProductOrder.clear();
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("Lổi xuất đơn hàng");

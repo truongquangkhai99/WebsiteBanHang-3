@@ -11,12 +11,12 @@ import model.*;
 import utils.DBUtils;
 
 public class AuthorDAO implements ObjectDAO {
-	public static Map<String, Author> mapSanPham = layDuLieuTuDatabase();
+	public static Map<String, Author> mapTacGia = layDuLieuTuDatabase();
 
 	@Override
 	public boolean add(Object obj) {
 		Author author = (Author) obj;
-		mapSanPham.put(author.getId(), author);
+		mapTacGia.put(author.getId(), author);
 		try {
 			String sql = "insert into Authors values (?,?,?)";
 			Connection connect = ConnectionUtils.getConnection();
@@ -57,7 +57,7 @@ public class AuthorDAO implements ObjectDAO {
 	@Override
 	public boolean edit(String id,Object obj) {
 		Author author = (Author) obj;
-		mapSanPham.replace(author.getId(), author);
+		mapTacGia.replace(author.getId(), author);
 		String sql = "update Authors set title=?,price=?,sale_price=? where id=?";
 		try {
 			Connection connect = ConnectionUtils.getConnection();
@@ -76,7 +76,7 @@ public class AuthorDAO implements ObjectDAO {
 
 	@Override
 	public boolean del (String id) {
-		mapSanPham.remove(id);
+		mapTacGia.remove(id);
 		String sql = "delete from Authors where id='" + id + "'";
 		try {
 			Connection conn = ConnectionUtils.getConnection();

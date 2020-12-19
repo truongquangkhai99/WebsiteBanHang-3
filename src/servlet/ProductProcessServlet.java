@@ -9,10 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.UserDAO;
+import dao.BookDAO;
 import dao.ProductDAO;
 import dao.UndoDAO;
-import model.KhachHang;
-import model.Product;
+import model.User;
+import model.Book;
 
 @WebServlet("/Product")
 public class ProductProcessServlet extends HttpServlet {
@@ -30,46 +31,46 @@ public class ProductProcessServlet extends HttpServlet {
 		session.getAttribute("");
 		
 		String chucNang = request.getParameter("chucNang");
-		String maKH = request.getParameter("id");
+		String bookID = request.getParameter("id");
 		if(chucNang==null){
 			
 		}else
-			//chức năng xóa khách hàng
+			//chức năng xóa sách
 			if(chucNang.equals("Delete")){
-				UndoDAO.undoProduct.push(ProductDAO.mapProduct.get(maKH));
-			new ProductDAO().del(maKH);
+				UndoDAO.undoBook.push(BookDAO.mapSanPham.get(bookID));
+			new BookDAO().del(bookID);
 		}else
-			//chức năng xóa tất cả khách hàng
+			//chức năng xóa tất cả sách
 			if(chucNang.equals("DelAll")){
-			new ProductDAO().delAll();
+			new BookDAO().delAll();
 		}else
 			//chức năng undoAll
 			if(chucNang.equals("UndoAll")){
-			new ProductDAO().undo();
+			new BookDAO().undo();
 		}else
 			//chức năng undoOne
 			if(chucNang.equals("UndoOne")){
 			new UndoDAO().restoreDeletedProduct();
 		}else
-			//chức năng sửa khách hàng
+			//chức năng sửa sách
 			if(chucNang.equals("Edit")){
 			String productID = request.getParameter("masp");
 			String productName=request.getParameter("pdName");
 			String price=request.getParameter("price");
 			String producerID=request.getParameter("NSXID");
 			String img=request.getParameter("img");
-			Product kh = new Product(productID, productName, price, producerID, img);
-			new ProductDAO().edit(kh);
+			Book kh = new Book(productID, productName, price, producerID, img);
+			new BookDAO().edit(kh);
 		}else
-			//chức năng thêm khách hàng
+			//chức năng thêm sách
 			if(chucNang.equals("Add")){
 				String productName=request.getParameter("pdName");
 				String price=request.getParameter("price");
 				String producerID=request.getParameter("NSXID");
 				String img=request.getParameter("img");
-				String productID="Product"+new ProductDAO().random(9000);
-				Product kh = new Product(productID, productName, price, producerID, img);
-			new ProductDAO().add( kh);
+				String productID="Product"+new BookDAO().random(9000);
+				Book kh = new Book(productID, productName, price, producerID, img);
+			new BookDAO().add( kh);
 		}
 		response.sendRedirect("showproduct.jsp");
 	}

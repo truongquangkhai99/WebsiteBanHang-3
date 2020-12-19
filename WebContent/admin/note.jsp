@@ -28,7 +28,7 @@
 </head>
 <body>
 	<header>
-		<jsp:include page="/menu/menu.jsp"></jsp:include>
+		<jsp:include page="menu/menu.jsp"></jsp:include>
 	</header>
 	<div class="container">
 		<div class="row">
