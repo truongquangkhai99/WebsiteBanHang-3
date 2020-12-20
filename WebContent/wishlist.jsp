@@ -72,7 +72,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="content">
 		<div class="wish-list">
 			<h6><a href="#">Product Name</a>	<a href="#">Unit Price</a>	<a href="#">Stock Status</a></h6>	
-			<p>No products were added to the wishlist</p>
+			<p>No products were added to the wishlist - ${ id } </p>
 		</div>
 
 		</div>

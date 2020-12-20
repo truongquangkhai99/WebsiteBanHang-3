@@ -69,34 +69,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<jsp:include page="header/header-bottom.jsp"></jsp:include>
 		<!-- header-bottom -->
 
-		<div class="content">
-		<div class="account-in">
-							<h2>Tài khoản</h2>
-							<div class="col-md-7 account-top">
-								<form action="login?action=login" method="post">
-									<div> 	
-										<span>Tên đăng nhập</span>
-										<input type="text" name="username"> 
-									</div>
-									<div> 
-										<span  class="pass">Mật khẩu</span>
-										<input type="password" name="password">
-									</div>				
-										<input type="submit" value="Đăng nhập"> 
-								</form>
-							</div>
-							<div class="col-md-5 left-account ">
-								<a href="single.html"><img class="img-responsive " src="images/ac.jpg" alt=""></a>
-								<div class="five-in">
-								<h1>25% </h1><span>discount</span>
-								</div>
-								<a href="register.html" class="create">Tạo mới</a>
-								<div class="clearfix"> </div>
-							</div>
-						<div class="clearfix"> </div>
-					</div>	
-
-	
+		<div class="content" style="background: #e5ecee;">
+			<jsp:include page="userInfo.jsp"></jsp:include>	
 		</div>
 		<!---->
 		<footer>
