@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Quản lý tác giả - TriThucOnline</title>
+<title>Quản lý thể loại - TriThucOnline</title>
 		<meta charset="utf-8">
  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
@@ -71,13 +71,13 @@
 </head>
 <body>
     <header>
-<%--         <jsp:include page="menu/menu.jsp"></jsp:include> --%>
-        <jsp:include page="./menu/header.jsp"></jsp:include>
+        <jsp:include page="menu/menu.jsp"></jsp:include>
+<%--         <jsp:include page="./menu/header.jsp"></jsp:include> --%>
     </header>
     <div class="container">
         <div class="row">
             <h2>
-                <strong>Quản lý tác giả</strong>
+                <strong>Quản lý thể loại</strong>
             </h2>
         </div>
 <!--         <div class="row"> -->
@@ -105,7 +105,7 @@
                 <thead>
                     <tr>
                         <th>Mã</th>
-                        <th>Tên NXB</th>
+                        <th>Tên thể loại</th>
                         <th>Xóa</th>
                         <th>Sửa</th>
                         <th>Thông tin chi tiết</th>

@@ -73,8 +73,8 @@
 </head>
 <body>
     <header>
-<%--         <jsp:include page="menu/menu.jsp"></jsp:include> --%>
-        <jsp:include page="menu/header.jsp"></jsp:include>
+        <jsp:include page="menu/menu.jsp"></jsp:include>
+<%--         <jsp:include page="menu/header.jsp"></jsp:include> --%>
     </header>
     <div class="container">
         <div class="row">
@@ -109,7 +109,7 @@
                         <th>STT</th>
                         <th>Tên</th>
                         <th>Tài khoản</th>
-                        <th>Mật khẩu</th>
+                        <th>Địa chỉ</th>
                         <th>Số điện thoại</th>
                         <th>Xóa</th>
                         <th>Sửa</th>
@@ -134,9 +134,7 @@
                                 <%=kh.getUsername()%>
                             </td>
                             <td>
-                                <%
-								out.print("***********");
-							%>
+                                <%=kh.getAddress()%>
                             </td>
                             <td>
                                 <%=kh.getPhone()%>
