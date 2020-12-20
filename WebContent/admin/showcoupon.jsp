@@ -1,6 +1,6 @@
-<%@page import="dao.AuthorDAO"%>
+<%@page import="dao.CouponDAO"%>
 <%@page import="dao.UndoDAO"%>
-<%@page import="model.Author"%>
+<%@page import="model.Coupon"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import=" java.util.HashMap"%>
 <%@page import=" java.util.Map"%>
@@ -8,12 +8,14 @@
 	pageEncoding="utf-8"%>
 
 <%
-	Map<String, Author> mapListTacGia = AuthorDAO.mapTacGia;
+	//ArrayList<KhachHang> listCustomer = new KhachHangDAO().getKh(); 
+	HttpSession session2 = request.getSession();
+	Map<String, Coupon> mapListCoupon = CouponDAO.mapCoupon;
 %>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Quản lý tác giả - TriThucOnline</title>
+<title>Quản lý khách hàng - TriThucOnline</title>
 		<meta charset="utf-8">
  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
@@ -72,12 +74,12 @@
 <body>
     <header>
         <jsp:include page="menu/menu.jsp"></jsp:include>
-<%--         <jsp:include page="./menu/header.jsp"></jsp:include> --%>
+<%--         <jsp:include page="menu/header.jsp"></jsp:include> --%>
     </header>
     <div class="container">
         <div class="row">
             <h2>
-                <strong>Quản lý tác giả</strong>
+                <strong>Quản lý khách hàng</strong>
             </h2>
         </div>
 <!--         <div class="row"> -->
@@ -101,22 +103,22 @@
 <!--         </div> -->
 
         <div>
-            <table id="datatable-buttons" class="table table-striped table-bordered">
+            <table id="datatable-buttons" class="table table-condensed table-bordered table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>Mã</th>
-                        <th>Tên tác giả</th>
-                        <th>Ảnh tác giả</th>
-                        <th>Xóa</th>
-                        <th>Sửa</th>
-                        <th>Thông tin chi tiết</th>
+                        <th>STT</th>
+                        <th>Mã giảm giá</th>
+                        <th>Giá trị</th>
+                        <th>Số lần còn lại</th>
+                        <th>Kích hoạt?</th>
+                        <th>Chức năng</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <%
 						int count = 0;
-						for (Author kh : mapListTacGia.values()) {
+						for (Coupon kh : mapListCoupon.values()) {
 							count++;
 					%>
                         <tr>
@@ -124,26 +126,33 @@
                                 <%=count%>
                             </td>
                             <td>
-                                <%=kh.getName()%>
+                                <%=kh.getCode()%>
                             </td>
-                            <td><img src="../<%=kh.getPicture()%>" class="img-responsive"
-							style="width: 150px; height: auto" /></td>
+                            <td>
+                                <%=kh.getDiscount()%>
+                            </td>
+                            <td>
+                                <%=kh.getCount()%>
+                            </td>
+                            <td>
+                                <%=kh.getIs_enable()%>
+                            </td>
                             <td>
                                 <a href="Process?chucNang=Delete&id=<%=kh.getId()%>">
                                     <button type="button" class="btn btn-sm btn-danger" id="" aria-label="Right Align">
-									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-								</button>
+										<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+									</button>
                                 </a>
-                            </td>
-                            <td> <a href="author.jsp?id=<%=kh.getId()%>&chucNang=Edit"><button type="button" class="btn  btn-sm btn-warning"
-									aria-label="Right Align">
-									<span class="glyphicon glyphicon-edit"></span>
-								</button></a>
-                            </td>
-                            <td> <a href="author.jsp?id=<%=kh.getId()%>&chucNang=Info"><button type="button" class="btn  btn-sm btn-primary"
-									aria-label="Right Align">
+                                <a href="customer.jsp?id=<%=kh.getId()%>&chucNang=Edit">
+                                	<button type="button" class="btn  btn-sm btn-warning" aria-label="Right Align">
+										<span class="glyphicon glyphicon-edit"></span>
+									</button>
+								</a>
+								<a href="customer.jsp?id=<%=kh.getId()%>&chucNang=Info">
+									<button type="button" class="btn  btn-sm btn-primary" aria-label="Right Align">
 										<span class="glyphicon glyphicon-info-sign" ></span>
-								</button></a>
+									</button>
+								</a>
                             </td>
 
                         </tr>
