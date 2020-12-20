@@ -13,6 +13,9 @@ import utils.DBUtils;
 public class PublisherDAO implements ObjectDAO {
 	public static Map<String, Publisher> mapPublisher = layDuLieuTuDatabase();
 	
+	public String getPublisherName(String id){
+		return mapPublisher.get(id).getName();
+	}
 
 	@Override
 	public boolean add(Object obj) {

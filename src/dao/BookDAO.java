@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import conn.ConnectionUtils;
 import model.*;
@@ -49,6 +51,14 @@ public class BookDAO implements ObjectDAO {
 			}
 		}
 		return name;
+	}
+	
+	public static Set<String> getSetPublisher() {
+		Set<String> publisher = new HashSet<>();
+		for (Book sp : mapSanPham.values()) {
+			publisher.add(sp.getPublisher_id());
+		}
+		return publisher;
 	}
 
 	public static Map<String, Book> layDuLieuTuDatabase() {

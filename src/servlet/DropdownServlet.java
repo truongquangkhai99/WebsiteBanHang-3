@@ -14,7 +14,7 @@ import dao.BookDAO;
 import model.Order;
 import model.Book;
 
-@WebServlet("/Dropdown")
+@WebServlet("/admin/Dropdown")
 public class DropdownServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
