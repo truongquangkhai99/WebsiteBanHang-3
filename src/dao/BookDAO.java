@@ -37,7 +37,7 @@ public class BookDAO implements ObjectDAO {
 			ppstm.setString(12, sp.get_new());
 			ppstm.executeUpdate();
 		} catch (Exception e) {
-			System.out.println("Lỗi truy vấn đb " + e.getMessage());
+			System.out.println("Lá»—i truy váº¥n Ä‘b " + e.getMessage());
 			return false;
 		}
 		return true;
@@ -131,12 +131,61 @@ public class BookDAO implements ObjectDAO {
 			Connection conn = ConnectionUtils.getConnection();
 			DBUtils.executeSQL(conn, sql);
 		} catch (Exception e) {
-			System.out.println("Lỗi truy vấn db:" + e.getMessage());
+			System.out.println("Lá»—i truy váº¥n db:" + e.getMessage());
 			return false;
 		}
 		return true;
 	}
 
-	
+	public static int getNumberPage() {
+		String sql = "select count(*) from books";
+		try {
+			Connection conn = ConnectionUtils.getConnection();
+			ResultSet rs = DBUtils.selectData(conn, sql);
+			while (rs.next()) {
+				int total = rs.getInt(1);
+				int countPage = 0;
+				countPage = total/5;
+				if(total%5 != 0) {
+					countPage++;
+				}
+				return countPage;
+			}
+		} catch (Exception e) {
+			System.out.println("Lỗi lấy dữ liệu:" + e.getMessage());
+		}
+		return 0;
+	}
 
+	public static Map<String, Book> getDetailBook(int idBook) {
+		Map<String, Book> map = new HashMap<>();
+		try {
+			Connection conn = ConnectionUtils.getConnection();
+			ResultSet rs = DBUtils.selectData(conn,"select * from  books where id="+idBook);
+			while (rs.next()) {
+				String id = rs.getString(1);
+				String title = rs.getString(2);
+				String price = rs.getString(3);
+				String sale_price = rs.getString(4);
+				String publish_year = rs.getString(5);
+				String picture = rs.getString(6);
+				String page_number = rs.getString(7);
+				String quantity = rs.getString(8);
+				String quotes_about = rs.getString(9);
+				String author_id = rs.getString(10);
+				String publisher_id = rs.getString(11);
+				String category_id = rs.getString(12);
+				String _new = rs.getString(13);
+				Book sp = new Book(id, title, price, sale_price, publish_year, picture, page_number,
+						quantity, quotes_about, author_id, publisher_id, category_id, _new);
+				map.put(sp.getId(), sp);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return map;
+	}
 }

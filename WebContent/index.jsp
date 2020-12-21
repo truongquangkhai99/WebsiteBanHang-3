@@ -1,5 +1,27 @@
+<%@page import="java.util.Map"%>
+<%@page import="dao.BookDAO"%>
+<%@page import="model.Book"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	Map<String, Book> mapListProduct = BookDAO.mapSanPham;
+%>
+<%!
+	public String percentBook(String a, String b) {
+		float x = Float.parseFloat(a);  	
+		float y = Float.parseFloat(b);
+		String result = Float.toString((long)(100-(x*100/y)));
+     	return result.substring(0, result.indexOf("."));
+  	}
+%>
+<%!
+	public String formatMoney(String a) {
+		float x = Float.parseFloat(a);  
+		String result = String.format("%,.0f", x);
+     	return result;
+  	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +40,13 @@
 	content="Mihstore Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript">
+	
+	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
+
 </script>
 <!--fonts-->
 <link
@@ -101,159 +129,34 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="content-bottom">
 					<h3>Featured products</h3>
 					<div class="bottom-grid">
-						<div class="col-md-4 shirt">
+						<%
+							int count = 0;
+							for (Book sp : mapListProduct.values()) {
+								count++;
+						%>
+						<div class="col-md-4 shirt" style="margin-bottom: 20px">
 							<div class="bottom-grid-top">
-								<a href="single.jsp"><img class="img-responsive"
-									src="images/sh.png" alt="">
+								<a href="Book?id=<%=sp.getId()%>&func=Detail"> 
+									<img style="height: 200px" src="<%=sp.getPicture()%>" class="img-responsive" alt="">
 									<div class="five">
-										<h6>-50%</h6>
+										<h6>- <%=percentBook(sp.getSale_price(), sp.getPrice())%>%</h6>
 									</div>
 									<div class="pre">
-										<p>Pure Slim Xe</p>
-										<span>$60.00</span>
+										<p><%=sp.getTitle()%></p>
+										<span>
+											<%=formatMoney(sp.getPrice())%>₫
+										</span>
 										<div class="clearfix"></div>
 									</div></a>
-
-
 							</div>
 						</div>
-						<div class="col-md-4 shirt">
-							<div class="bottom-grid-top">
-								<a href="single.jsp"><img class="img-responsive"
-									src="images/sh2.png" alt="">
-									<div class="five">
-										<h6 class="one">-50%</h6>
-									</div>
-									<div class="pre">
-										<p>Pure Slim Xe</p>
-										<span>$60.00</span>
-										<div class="clearfix"></div>
-									</div></a>
-
-
-							</div>
-						</div>
-						<div class="col-md-4 shirt">
-							<div class="bottom-grid-top">
-								<a href="single.jsp"><img class="img-responsive"
-									src="images/sh1.png" alt="">
-									<div class="five">
-										<h6 class="one1">-50%</h6>
-									</div>
-									<div class="pre">
-										<p>Pure Slim Xe</p>
-										<span>$60.00</span>
-										<div class="clearfix"></div>
-									</div></a>
-
-
-							</div>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					<div class="bottom-grid">
-						<div class="col-md-4 shirt">
-							<div class="bottom-grid-top">
-								<a href="single.jsp"><img class="img-responsive"
-									src="images/sh2.png" alt="">
-									<div class="five">
-										<h6 class="one">-50%</h6>
-									</div>
-									<div class="pre">
-										<p>Pure Slim Xe</p>
-										<span>$60.00</span>
-										<div class="clearfix"></div>
-									</div></a>
-
-
-							</div>
-						</div>
-						<div class="col-md-4 shirt">
-							<div class="bottom-grid-top">
-								<a href="single.jsp"><img class="img-responsive"
-									src="images/sh3.png" alt="">
-									<div class="five">
-										<h6 class="one1">-50%</h6>
-									</div>
-									<div class="pre">
-										<p>Pure Slim Xe</p>
-										<span>$60.00</span>
-										<div class="clearfix"></div>
-									</div></a>
-
-
-							</div>
-						</div>
-						<div class="col-md-4 shirt">
-							<div class="bottom-grid-top">
-								<a href="single.jsp"><img class="img-responsive"
-									src="images/sh4.png" alt="">
-									<div class="five">
-										<h6>-50%</h6>
-									</div>
-									<div class="pre">
-										<p>Pure Slim Xe</p>
-										<span>$60.00</span>
-										<div class="clearfix"></div>
-									</div></a>
-
-
-							</div>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					<div class="bottom-grid">
-						<div class="col-md-4 shirt">
-							<div class="bottom-grid-top">
-								<a href="single.jsp"><img class="img-responsive"
-									src="images/sh5.png" alt="">
-									<div class="five">
-										<h6 class="one1">-50%</h6>
-									</div>
-									<div class="pre">
-										<p>Pure Slim Xe</p>
-										<span>$60.00</span>
-										<div class="clearfix"></div>
-									</div></a>
-
-
-							</div>
-						</div>
-						<div class="col-md-4 shirt">
-							<div class="bottom-grid-top">
-								<a href="single.jsp"><img class="img-responsive"
-									src="images/sh.png" alt="">
-									<div class="five">
-										<h6>-50%</h6>
-									</div>
-									<div class="pre">
-										<p>Pure Slim Xe</p>
-										<span>$60.00</span>
-										<div class="clearfix"></div>
-									</div></a>
-
-
-							</div>
-						</div>
-						<div class="col-md-4 shirt">
-							<div class="bottom-grid-top">
-								<a href="single.jsp"><img class="img-responsive"
-									src="images/sh2.png" alt="">
-									<div class="five">
-										<h6 class="one">-50%</h6>
-									</div>
-									<div class="pre">
-										<p>Pure Slim Xe</p>
-										<span>$60.00</span>
-										<div class="clearfix"></div>
-									</div></a>
-
-
-							</div>
-						</div>
+						<%
+							}
+						%>
 						<div class="clearfix"></div>
 					</div>
 				</div>
+				
 				<div class="demo">
 					<nav class="pagination-outer" aria-label="Page navigation">
 						<ul class="pagination">

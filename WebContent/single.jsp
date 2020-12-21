@@ -1,5 +1,50 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@page import="dao.BookDAO"%>
+<%@page import="model.Book"%>
+<%@page import="java.util.Set"%>
+<%@page import="dao.UndoDAO"%>
+<%@page import="model.Category"%>
+<%@page import="dao.CategoryDAO"%>
+<%@page import="dao.PublisherDAO"%>
+<%@page import="model.Publisher"%>
+<%@page import="dao.AuthorDAO"%>
+<%@page import="model.Author"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import=" java.util.HashMap"%>
+<%@page import=" java.util.Map"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%
+	Map<String, Book> mapListProduct = BookDAO.mapSanPham;
+	Map<String, Publisher> mapListPublisher = PublisherDAO.mapPublisher;
+	Map<String, Category> mapListCategory = CategoryDAO.mapLoaiSanPham;
+	Map<String, Author> mapListAuthor = AuthorDAO.mapTacGia;
+	Set<String> setPublisher = BookDAO.getSetPublisher();
+	
+	String x = request.getParameter("id");
+	Book detailBook = BookDAO.mapSanPham.get(x);
+	String publisherId = detailBook.getPublisher_id();
+	String authorId = detailBook.getAuthor_id();
+	String categoryId = detailBook.getCategory_id();
+	
+	Publisher detailPublisher = PublisherDAO.mapPublisher.get(publisherId);
+	Author detailAuthor = AuthorDAO.mapTacGia.get(authorId);
+	Category detailCategory = CategoryDAO.mapLoaiSanPham.get(categoryId);
+%>
+<%!
+	public String formatMoney(String a) {
+		float x = Float.parseFloat(a);  
+		String result = String.format("%,.0f", x);
+     	return result;
+  	}
+%>
+<%!
+	public String percentBook(String a, String b) {
+		float x = Float.parseFloat(a);  	
+		float y = Float.parseFloat(b);
+		String result = Float.toString((long)(100-(x*100/y)));
+     	return result.substring(0, result.indexOf("."));
+  	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +59,7 @@
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 <!--//theme-style-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
 <meta name="keywords"
 	content="Mihstore Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
@@ -117,53 +162,58 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="col-md-9">
 				<div class="col-md-5 single-top">
 					<ul id="etalage">
-						<li><a href="optionallink.html"> <img
-								class="etalage_thumb_image img-responsive" src="images/s1.jpg"
-								alt=""> <img class="etalage_source_image img-responsive"
-								src="images/s11.jpg" alt="">
+						<li><a href="optionallink.html"> 
+							<img class="etalage_thumb_image img-responsive" src="<%=detailBook.getPicture()%>" alt=""> 
+							<img class="etalage_source_image img-responsive" src="<%=detailBook.getPicture()%>" alt="">
 						</a></li>
-						<li><img class="etalage_thumb_image img-responsive"
-							src="images/s2.jpg" alt=""> <img
-							class="etalage_source_image img-responsive" src="images/s12.jpg"
-							alt=""></li>
-						<li><img class="etalage_thumb_image img-responsive"
-							src="images/s3.jpg" alt=""> <img
-							class="etalage_source_image img-responsive" src="images/s13.jpg"
-							alt=""></li>
-						<li><img class="etalage_thumb_image img-responsive"
-							src="images/s4.jpg" alt=""> <img
-							class="etalage_source_image img-responsive" src="images/s14.jpg"
-							alt=""></li>
 					</ul>
 
 				</div>
 				<div class="col-md-7 single-top-in">
 					<div class="single-para">
-						<h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit</h4>
+						<h4><% out.print(detailBook.getTitle());%></h4>
 						<div class="para-grid">
-							<span class="add-to">$32.8</span> <a href="#" class=" cart-to">Thêm vào giỏ</a>
+							<span class="add-to"><%=formatMoney(detailBook.getPrice())%>₫</span> 
+							<span class="line-through"><%=formatMoney(detailBook.getPrice())%>₫</span>
+							<p class="">-<%=percentBook(detailBook.getSale_price(), detailBook.getPrice())%>%</p>
 							<div class="clearfix"></div>
 						</div>
-						<h5>100 items in stock</h5>
+						<h5>Còn <%=detailBook.getQuantity()%> sản phẩm</h5>
 						<div class="available">
-							<h6>Available Options :</h6>
-							<ul>
-
-								<li>Size:<select>
-										<option>Large</option>
-										<option>Medium</option>
-										<option>small</option>
-										<option>Large</option>
-										<option>small</option>
-								</select></li>
-								<li>Cost: <select>
-										<option>U.S.Dollar</option>
-										<option>Euro</option>
-								</select></li>
-							</ul>
+							<h6>Số lượng :</h6>
+							<div class="container-quantity">
+								<span class="btn-next" onclick="nextNumQuantity()"></span>
+								<span class="btn-prev" onclick="prevNumQuantity()"></span>
+								<div id="box-quantity">
+									<input type="text" id="quantity" value="1">
+								</div>
+							</div>
+							<script type="text/javascript">
+								var valueCount;
+								
+								function nextNumQuantity() {									
+									valueCount = document.getElementById("quantity").value;
+						            if (valueCount >= <%=detailBook.getQuantity()%>) {
+						            }
+						            else {
+										valueCount++;
+										document.getElementById("quantity").value = valueCount;
+						            }
+								}
+								function prevNumQuantity() {
+									valueCount = document.getElementById("quantity").value;
+									
+						            if (valueCount == 1) {
+						            }
+						            else {
+						            	valueCount--;
+										document.getElementById("quantity").value = valueCount;
+						            }
+								}
+							</script>
 						</div>
 
-						<a href="#" class="cart-an ">More details</a>
+						<a href="#" class="cart-an ">Thêm vào giỏ</a>
 						<div class="share">
 							<h4>Chia sẻ sản phẩm với: </h4>
 							<ul class="share_nav">
@@ -243,16 +293,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<table>
 							<tbody>
 								<tr>
-									<td><b>Công ty phát hành</b></td>
-									<td>Nhà Xuất Bản Đà Nẵng</td>
+									<td><b>Thể loại</b></td>
+									<td><%=detailCategory.getName()%></td>
 								</tr>
 								<tr>
 									<td><b>Tác giả</b></td>
-									<td>1433771174981</td>
+									<td><%=detailAuthor.getName()%></td>
 								</tr>
 								<tr>
 									<td><b>Nhà xuất bản</b></td>
-									<td>Nhà Xuất Bản Đà Nẵng</td>
+									<td><%=detailPublisher.getName()%></td>
+								</tr>
+								<tr>
+									<td><b>Năm xuất bản</b></td>
+									<td><%=detailBook.getPublish_year()%></td>
+								</tr>
+								<tr>
+									<td><b>Số trang</b></td>
+									<td><%=detailBook.getPage_number()%></td>
 								</tr>
 							</tbody>
 						</table>
@@ -263,9 +321,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				
 				<div class="description-book">
 					<p>
-						Giải mã siêu trí nhớ" được in màu toàn bộ. Nội dung bao gồm nhiều phương pháp ghi nhớ đa dạng thông qua các ví dụ dí dỏm, hài hước và các hình ảnh minh hoạ trực quan sinh động, đồng thời giải mã các thử thách trong Giải đấu trí nhớ trên Thế giới và Siêu trí tuệ Việt Nam. Cuốn sách là toàn bộ các phương pháp ghi nhớ do tác giả Mai Tường Vân học hỏi và sáng tạo, cũng như kinh nghiệm đúc kết từ các trải nghiệm trong suốt thời gian gắn bó với lĩnh vực trí nhớ.
-						<span id="dots">...</span><span id="more-detail">
-						Giải mã siêu trí nhớ" được in màu toàn bộ. Nội dung bao gồm nhiều phương pháp ghi nhớ đa dạng thông qua các ví dụ dí dỏm, hài hước và các hình ảnh minh hoạ trực quan sinh động, đồng thời giải mã các thử thách trong Giải đấu trí nhớ trên Thế giới và Siêu trí tuệ Việt Nam. Cuốn sách là toàn bộ các phương pháp ghi nhớ do tác giả Mai Tường Vân học hỏi và sáng tạo, cũng như kinh nghiệm đúc kết từ các trải nghiệm trong suốt thời gian gắn bó với lĩnh vực trí nhớ.
+						<%=detailBook.getQuotes_about()%>
+						<span id="dots">...</span>
+						<span id="more-detail">
+							<b>VỀ TÁC GIẢ</b> 
+							<%=detailAuthor.getInfo()%>
 						</span> 
 					</p>
 					
