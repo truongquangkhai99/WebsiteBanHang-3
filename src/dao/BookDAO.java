@@ -14,6 +14,7 @@ import utils.DBUtils;
 
 public class BookDAO implements ObjectDAO {
 	public static Map<String, Book> mapSanPham = layDuLieuTuDatabase();
+	public static Map<String, Book> mapUndo = new HashMap<>();
 
 	@Override
 	public boolean add(Object obj) {
@@ -43,6 +44,12 @@ public class BookDAO implements ObjectDAO {
 		return true;
 	}
 
+	public boolean undo() {
+		mapSanPham.putAll(mapUndo);
+		mapUndo.clear();
+		return true;
+	}
+
 	public String getNameBook(String id) {
 		String name = "";
 		for (Book kh : mapSanPham.values()) {
@@ -59,6 +66,16 @@ public class BookDAO implements ObjectDAO {
 			publisher.add(sp.getPublisher_id());
 		}
 		return publisher;
+	}
+
+	public Map<String, Book> getSelectPublisher(String publisherID) {
+		Map<String, Book> mapSelectProduct = new HashMap<>();
+		for (Book sp : mapSanPham.values()) {
+			if (sp.getPublisher_id().equals(publisherID)) {
+				mapSelectProduct.put(sp.getId(), sp);
+			}
+		}
+		return mapSelectProduct;
 	}
 
 	public static Map<String, Book> layDuLieuTuDatabase() {
@@ -96,7 +113,7 @@ public class BookDAO implements ObjectDAO {
 	@Override
 	public boolean edit(String id,Object obj) {
 		Book sp = (Book) obj;
-		mapSanPham.replace(sp.getId(), sp);
+		mapSanPham.replace(id, sp);
 		String sql = "update Books set title=?,price=?,sale_price=?,publish_year=?,picture=?,"
 				+ "page_number=?,quantity=?,quotes_about=?,author_id=?, publisher_id=?,category_id=?,new=? where id=?";
 		try {
@@ -134,6 +151,13 @@ public class BookDAO implements ObjectDAO {
 			System.out.println("Lá»—i truy váº¥n db:" + e.getMessage());
 			return false;
 		}
+		return true;
+	}
+
+	public boolean delAll() {
+		mapUndo.putAll(mapSanPham);
+		mapSanPham.clear();
+
 		return true;
 	}
 

@@ -278,7 +278,7 @@ Set<String> setPublisher = BookDAO.getSetPublisher();
 					class="btn btn-sm btn-success" id="Them">
 					<span class="glyphicon glyphicon-plus"></span> Thêm sản phẩm
 				</button></a> -->
-				 <a href="Product?chucNang=DelAll">
+				 <a href="Book?chucNang=DelAll">
 					 <button
 					class="btn btn-sm btn-success" id="">
 					<span class="glyphicon glyphicon-trash"></span> Xóa tất cả
@@ -287,9 +287,9 @@ Set<String> setPublisher = BookDAO.getSetPublisher();
 			<%
 				if (!BookDAO.mapSanPham.isEmpty()) {
 			%>
-			<a href="Product?chucNang=UndoAll"><button
+			<a href="Book?chucNang=UndoAll"><button
 					class="btn btn-sm btn-success" id="">
-					<i class="fa fa-undo" aria-hidden="true"></i> Undo
+					<i class="fa fa-undo" aria-hidden="true"></i> Undo all
 				</button></a>
 			<%
 				}
@@ -297,7 +297,7 @@ Set<String> setPublisher = BookDAO.getSetPublisher();
 			<%
 				if (!UndoDAO.undoBook.isEmpty()) {
 			%>
-			<a href="Product?chucNang=UndoOne"><button
+			<a href="Book?chucNang=UndoOne"><button
 					class="btn btn-sm btn-success" id="">
 					<i class="fa fa-undo" aria-hidden="true"></i> Undo
 				</button></a>
@@ -392,11 +392,14 @@ Set<String> setPublisher = BookDAO.getSetPublisher();
 	function Remove(Id) {
         $.ajax({
             type: 'POST',
-            url: '/QuanLySach/Remove',
+            url: 'Book?chucNang=Delete',
             data: { id: Id },
             success: function (data) {
-                $("#deletedModal").modal();
-                location.reload();
+				$("#deletedModal").modal();
+				$('#deletedModal').on('hide.bs.modal', function (e) {
+					location.reload();
+				})
+                
             },
             error: function () {
                 alert("Đã có lỗi xảy ra khi xóa");
@@ -417,26 +420,30 @@ Set<String> setPublisher = BookDAO.getSetPublisher();
 		$("#editModal .modal-body #publisher_id").val(params[9]);
 		$("#editModal .modal-body #category_id").val(params[10]);
 		$("#editModal .modal-body #sale_price").val(params[11]);
-		$("#editModal .modal-body #output").attr("src", "../"+params[4]);
+		$("#editModal .modal-body #output1").attr("src", "../"+params[4]);
 		$("#editModal").modal();
 	}
 
 	$(document).ready(function () {
         $("#editForm").submit(function(e) {
             e.preventDefault(); // avoid to execute the actual submit of the form.
-            var form = $(this);
+			var form = $(this);
+			var formData = new FormData($(this)[0]);
             var url = form.attr('action');
             $("#editModal").modal('hide');
             $.ajax({
                 type: "POST",
-                url: url,
-                data: form.serialize(), // serializes the form's elements.
+				url: url,
+				contentType: false,
+				processData: false,
+				enctype: 'multipart/form-data',
+				data: formData,
                 success: function(data)
                 {
                     $("#deletedModal").modal();
-                    $.get(data.Url + "?page=" + pageNumber, function (partial) {
-                        $("#Books").html(partial);
-                    });
+                    $('#deletedModal').on('hide.bs.modal', function (e) {
+					location.reload();
+				})
                 },
                 error: function(){
                     alert("Đã có lỗi xảy ra khi truy vấn");
@@ -446,19 +453,23 @@ Set<String> setPublisher = BookDAO.getSetPublisher();
         });
         $("#addForm").submit(function(e) {
             e.preventDefault(); // avoid to execute the actual submit of the form.
-            var form = $(this);
+			var form = $(this);
+			var formData = new FormData($(this)[0]);
             var url = form.attr('action');
             $("#addModal").modal('hide');
             $.ajax({
-                type: "POST",
-                url: url,
-                data: form.serialize(), // serializes the form's elements.
+				type: "POST",
+				url: url,
+				contentType: false,
+				processData: false,
+				enctype: 'multipart/form-data',
+				data: formData,
                 success: function(data)
                 {
                     $("#deletedModal").modal();
-                    $.get(data.Url + "?page=" + pageNumber, function (partial) {
-                        $("#Books").html(partial);
-                    });
+                    $('#deletedModal').on('hide.bs.modal', function (e) {
+						location.reload();
+					})
                 },
                 error: function(xhr, status, error) {
                     alert("Đã có lỗi xảy ra khi truy vấn ");
@@ -467,6 +478,15 @@ Set<String> setPublisher = BookDAO.getSetPublisher();
             
 		});
 	})
+	
+</script>
+<script>
+	var loadFile = function (event, add) {
+		if(add)
+			$("#output").attr("src",URL.createObjectURL(event.target.files[0]));
+		else
+			$("#output1").attr("src",URL.createObjectURL(event.target.files[0]));
+	};
 </script>
 <!-- Deleted Modal HTML -->
 <div id="deletedModal" class="modal fade">
@@ -510,7 +530,7 @@ Set<String> setPublisher = BookDAO.getSetPublisher();
 <div id="addModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="addForm" action="../Product?chucNang=Add" method="post" enctype="multipart/form-data">
+            <form id="addForm" action="Book?chucNang=Add" method="post" enctype="multipart/form-data">
                 <div class="modal-header" style="background-color: #5cb85c;color: white;text-align: center;font-size: 30px;">
                     <h4 class="modal-title">Thêm sách</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -541,7 +561,7 @@ Set<String> setPublisher = BookDAO.getSetPublisher();
 							<img id="output" src="#" style="width: 150px; height: auto">
 						</div>
 						<input type="file" class="form-control-file" name="fileUpload"
-							value="#" onchange="loadFile(event)" accept="image/*" />
+							value="#" onchange="loadFile(event, true)" accept="image/*" />
 					</div>
                     <div class="form-group">
                         <label>Số trang sách</label>
@@ -556,20 +576,39 @@ Set<String> setPublisher = BookDAO.getSetPublisher();
                         <textarea class="form-control" name="quotes_about" id="quotes_about" rows="4" cols="50"></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Tác giả</label>
-                        <select type="text" class="form-control" name="author_id" id="author_id" required>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Nhà xuất bản</label>
-                        <select type="text" class="form-control" name="publisher_id" id="publisher_id" required>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Thể loại</label>
-                        <select type="text" class="form-control" name="category_id" id="category_id" required>
-                        </select>
-                    </div>
+						<label>Tác giả</label> <select type="text" class="form-control"
+							name="author_id" id="author_id" required>
+							<%
+								for (Author kh : mapListAuthor.values()) {
+
+								out.print("<option value=" + kh.getId() + ">" + kh.getName() + "</option>");
+							}
+							%>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>Nhà xuất bản</label> <select type="text"
+							class="form-control" name="publisher_id" id="publisher_id"
+							required>
+							<%
+								for (Publisher kh : mapListPublisher.values()) {
+
+								out.print("<option value=" + kh.getId() + ">" + kh.getName() + "</option>");
+							}
+							%>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>Thể loại</label> <select type="text" class="form-control"
+							name="category_id" id="category_id" required>
+							<%
+								for (Category kh : mapListCategory.values()) {
+
+								out.print("<option value=" + kh.getId() + ">" + kh.getName() + "</option>");
+							}
+							%>
+						</select>
+					</div>
                 </div>
                 <div class="modal-footer">
                     <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
@@ -583,8 +622,8 @@ Set<String> setPublisher = BookDAO.getSetPublisher();
 <div id="editModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id="editForm" action="../Product?chucNang=Edit" method="post" enctype="multipart/form-data">
-				<div class="modal-header" style="background-color: #b8b75c;color: white;text-align: center;font-size: 30px;">
+			<form id="editForm" action="Book?chucNang=Edit" method="post" enctype="multipart/form-data">
+				<div class="modal-header" style="background-color: #ec971f;color: white;text-align: center;font-size: 30px;">
 					<h4 class="modal-title">Chỉnh sửa sách</h4>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
@@ -613,17 +652,11 @@ Set<String> setPublisher = BookDAO.getSetPublisher();
 							type="text" value="" hidden>
 						<div class="fileinput-preview thumbnail" data-trigger="fileinput"
 							style="width: 150px; height: auto">
-							<img id="output" src="#" style="width: 150px; height: auto">
+							<img id="output1" src="#" style="width: 150px; height: auto">
 						</div>
 						<input type="file" class="form-control-file" name="fileUpload"
-							value="#" onchange="loadFile(event)" accept="image/*" />
+							value="#" onchange="loadFile(event, false)" accept="image/*" />
 
-						<script>
-			                var loadFile = function (event) {
-			                    var image = document.getElementById('output');
-			                    image.src = URL.createObjectURL(event.target.files[0]);
-			                };
-			            </script>
 					</div>
 					<div class="form-group">
 						<label>Số trang sách</label> <input type="number" min="1"

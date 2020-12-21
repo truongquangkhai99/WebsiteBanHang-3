@@ -60,13 +60,14 @@ public class SecurityFilter implements Filter {
             String loginURI = httpRequest.getContextPath() + "/admin/login";
             boolean isLoginRequest = httpRequest.getRequestURI().equals(loginURI);
             boolean isLoginPage = httpRequest.getRequestURI().endsWith("login.jsp");
+            boolean isResource = httpRequest.getRequestURI().endsWith(".png");
      
             if (isLoggedIn && (isLoginRequest || isLoginPage)) {
                 // the user is already logged in and he's trying to login again
                 // then forward to the homepage
                 httpRequest.getRequestDispatcher("/admin").forward(req, resp);
      
-            } else if (isLoggedIn || isLoginRequest) {
+            } else if (isResource ||isLoggedIn || isLoginRequest) {
                 // continues the filter chain
                 // allows the request to reach the destination
                 chain.doFilter(req, resp);

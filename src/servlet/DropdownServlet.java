@@ -41,10 +41,10 @@ public class DropdownServlet extends HttpServlet {
 		// chức năng hiển thị product đã lọc
 		if (chucNang.equals("Product")) {
 			String id = request.getParameter("id");
-			Map<String, Book> mapFilter = new BookDAO().getSelectProducer(id);
+			Map<String, Book> mapFilter = new BookDAO().getSelectPublisher(id);
 			BookDAO.mapSanPham.clear();
 			BookDAO.mapSanPham.putAll(mapFilter);
-			response.sendRedirect("showproduct.jsp");
+			response.sendRedirect("showbook.jsp");
 		} else
 		// chức năng hiển thị tất cả đơn hàng
 		if (chucNang.equals("AllOrder")) {
@@ -56,7 +56,7 @@ public class DropdownServlet extends HttpServlet {
 		if (chucNang.equals("AllProduct")) {
 			BookDAO.mapSanPham = BookDAO.layDuLieuTuDatabase();
 			OrderDAO.mapOrder = OrderDAO.getLoadOrderDTB();
-			response.sendRedirect("showproduct.jsp");
+			response.sendRedirect("showbook.jsp");
 		}
 	}
 
