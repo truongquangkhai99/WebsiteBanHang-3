@@ -20,7 +20,7 @@
     <ul class="nav navbar-nav">
       <li class="active"><a href="../index.jsp"><span class="glyphicon glyphicon-user"></span>  Giới thiệu</a></li>
       <li><a href="../showcustomer.jsp"> <i class="fa fa-users" aria-hidden="true"></i>  Khách hàng</a></li>
-      <li><a href="../showproduct.jsp" > <i class="fa fa-car" aria-hidden="true"></i>  Sản phẩm</a></li>
+      <li><a href="../showbook.jsp" > <i class="fa fa-car" aria-hidden="true"></i>  Sản phẩm</a></li>
       <li><a href="../showorder.jsp" > <i class="fa fa-list-alt" aria-hidden="true"></i>  Đơn hàng</a></li>
     </ul>
     <a href="../orderonline.jsp"><button class="btn btn-danger navbar-btn"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Đặt hàng online</button></a>
