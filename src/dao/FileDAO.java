@@ -66,16 +66,16 @@ public class FileDAO {
 			listBig.add(arr[i]);
 		}
 		//Kiá»ƒm tra xem danh sÃ¡ch nháº­n tá»« excel cÃ³ há»£p lá»‡ hay khÃ´ng,náº¿u cÃ³ thÃ¬ import,ngÆ°á»£c láº¡i lÃ  return null
-		if (listBig.size() < 5 || listBig.size() > 5) {
-			return null;
-		} else {
+		// if (listBig.size() < 5 || listBig.size() > 5) {
+		// 	return null;
+		// } else {
 			//Láº¥y ra tá»«ng giÃ¡ trá»‹ cá»§a hÃ ng,táº¡o ra object tÆ°Æ¡ng á»©ng,truyá»�n giÃ¡ trá»‹ cá»§a hÃ ng vÃ o thuá»™c tÃ­nh
 			for (int j = 0; j < listBig.size(); j++) {
 				list = getStringDoubleDot(listBig.get(j));
-				mapOBJ.put(list.get(0), new User(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4), s, s,
-						s, s, s, s, null));
+				mapOBJ.put(list.get(0), new User(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4), list.get(5), list.get(6),
+						list.get(7), list.get(8), list.get(9), list.get(10), null));
 			}
-		}
+		// }
 		return mapOBJ;
 	}
 
@@ -83,6 +83,7 @@ public class FileDAO {
 		ArrayList<String> listBig = new ArrayList<>();
 		ArrayList<String> list = new ArrayList<>();
 		Map<String, Book> mapProduct = new HashMap<>();
+		int continueBookID = BookDAO.mapSanPham.size();
 		s = s.substring(1, s.length() - 1);
 		String[] arr = s.split("}");
 		for (int i = 0; i < arr.length; i++) {
@@ -93,16 +94,15 @@ public class FileDAO {
 			}
 			listBig.add(arr[i]);
 		}
-		if (listBig.size() < 5 || listBig.size() > 5) {
-			return null;
-		} else {
-			for (int j = 0; j < listBig.size(); j++) {
-				list = getStringDoubleDot(listBig.get(j));
-				mapProduct.put(list.get(0),
-						new Book(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4), s, s, s, s, s, s, s,
-								s));
-			}
+		// if (listBig.size() < 5 || listBig.size() > 5) {
+		// return null;
+		// } else {
+		for (int j = 0; j < listBig.size(); j++) {
+			list = getStringDoubleDot(listBig.get(j));
+			mapProduct.put(continueBookID+j+"",
+					new Book(continueBookID+j+"", list.get(0), list.get(1), list.get(2), list.get(3), list.get(4), list.get(5), list.get(6), list.get(7), list.get(8), list.get(9), list.get(10), list.get(11)));
 		}
+		// }
 		return mapProduct;
 	}
 
@@ -120,15 +120,15 @@ public class FileDAO {
 			}
 			listBig.add(arr[i]);
 		}
-		if (listBig.size() < 5 || listBig.size() > 5) {
-			return null;
-		} else {
-			for (int j = 0; j < listBig.size(); j++) {
-				list = getStringDoubleDot(listBig.get(j));
-				mapOrder.put(list.get(0), new Order(list.get(0), null, null, null, list.get(1), list.get(2), null,
-						list.get(3), list.get(4)));
-			}
+		// if (listBig.size() < 5 || listBig.size() > 5) {
+		// return null;
+		// } else {
+		for (int j = 0; j < listBig.size(); j++) {
+			list = getStringDoubleDot(listBig.get(j));
+			mapOrder.put(list.get(0),
+					new Order(list.get(0), null, null, null, list.get(1), list.get(2), null, list.get(3), list.get(4)));
 		}
+		// }
 		return mapOrder;
 	}
 
@@ -136,7 +136,7 @@ public class FileDAO {
 		ArrayList<String> list = new ArrayList<>();
 		String[] arr = s.split(",");
 		for (int i = 0; i < arr.length; i++) {
-			list.add(arr[i].split(":")[1]);
+			list.add(arr[i].split(":")[1].replace("\"",""));
 		}
 		return list;
 	}
