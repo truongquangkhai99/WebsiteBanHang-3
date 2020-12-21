@@ -49,6 +49,7 @@ public class SecurityFilter implements Filter {
             throws IOException, ServletException {
         httpRequest = (HttpServletRequest)req;
 //        httpRespone = (HttpServletResponse)resp;
+        req.setCharacterEncoding("UTF-8");
 		 
         String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
         HttpSession session = httpRequest.getSession(false);

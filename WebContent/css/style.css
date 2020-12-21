@@ -1098,6 +1098,93 @@ a.add {
 
 .para-grid {
 	padding: 1.5em 0;
+	display: flex;
+	align-items: baseline;
+}
+.para-grid span {
+	margin-right: 5px;
+}
+.para-grid p {
+	margin-left: 5px;
+}
+
+/*input choose quantity*/
+.container-quantity {
+	position: relative;
+	width: 80px;
+	height: 35px;
+	border-radius: 40px;
+	border: 2px solid rgba(255,26,26,0.2);
+	transition: 0.5s;
+}
+.container-quantity:hover {
+	width: 120px;
+	border: 2px solid rgba(255,26,26,1);
+}
+.container-quantity .btn-next {
+	position: absolute;
+	top: 50%;
+	right: 30px;
+	display: block;
+	width: 12px;
+	height: 12px;
+	border-top: 2px solid rgb(255,26,26);
+	border-left:2px solid rgb(255,26,26);
+	z-index: 1;
+	transform: translateY(-50%) rotate(135deg);
+	cursor: pointer;
+	opacity: 0;
+	transition: 0.5s;
+}
+.container-quantity:hover .btn-next {
+	opacity: 1;
+	right: 20px;
+}
+.container-quantity .btn-prev {
+	position: absolute;
+	top: 50%;
+	left: 30px;
+	display: block;
+	width: 12px;
+	height: 12px;
+	border-top: 2px solid rgb(255,26,26);
+	border-left:2px solid rgb(255,26,26);
+	z-index: 1;
+	transform: translateY(-50%) rotate(315deg);
+	cursor: pointer;
+	opacity: 0;
+	transition: 0.5s;
+}
+.container-quantity:hover .btn-prev {
+	opacity: 1;
+	left: 20px;
+}
+.container-quantity #box-quantity input {
+	position: absolute;
+	display: block;
+	width: 50px;
+	height: 90%;
+	text-align: center;
+	line-height: 32px;
+	color: #00deff;
+	font-size: 20px;
+	font-weight: bold;
+	user-select: none;
+	transform: translate(30%, 5%);
+	border: none;
+	transition: 0.8s;
+}
+.container-quantity:hover #box-quantity input {
+	transform: translate(65%, 5%);
+	border: none;
+	transition: 0.8s;
+}
+.container-quantity #box-quantity span:nth-child(1) {
+	display: initial;
+}
+
+.para-grid .line-through {
+	text-decoration: line-through;
 }
 
 span.add-to {
