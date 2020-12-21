@@ -35,8 +35,8 @@
                                 ${errorString}
                             </div>
                         </c:if>
-
-                    <form class="form-horizontal" id='input_form' action="login" method="post">
+<% String url =""; if (request.getParameter("returnURL") != null) { url = "?returnURL="+request.getParameter("returnURL"); } %>
+                    <form class="form-horizontal" id='input_form' action="login<%=url%>" method="post">
                         <fieldset>
                         <input type="hidden" name="from" value="${pageContext.request.requestURI}" />
                             <div class="input-group input-group-lg">
