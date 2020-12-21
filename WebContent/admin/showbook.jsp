@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="dao.BookDAO"%>
 <%@page import="model.Book"%>
 <%@page import="java.util.Set"%>
@@ -108,7 +109,7 @@ th {
 				</ul>
 			</div>
 
-			<a style="margin-left: 10px" href="product/product.jsp?chucNang=Add"><button
+			<a style="margin-left: 10px" href="book/book.jsp?chucNang=Add"><button
 					class="btn btn-sm btn-success" id="Them">
 					<span class="glyphicon glyphicon-plus"></span> Thêm sản phẩm
 				</button></a> <a href="Product?chucNang=DelAll"><button
@@ -154,9 +155,8 @@ th {
 						<th>Tên sản phẩm</th>
 						<th>Ảnh bìa</th>
 						<th>Giá</th>
+						<th>Giá sale</th>
 						<th>Số lượng còn</th>
-						<th>Tác giả</th>
-						<th>Thể loại</th>
 						<th>Chức năng</th>
 					</tr>
 				</thead>
@@ -172,24 +172,30 @@ th {
 						<td width="300"><%=sp.getTitle()%></td>
 						<td><img src="../<%=sp.getPicture()%>" class="img-responsive"
 							style="width: 150px; height: auto" /></td>
-						<td width="80"><%=sp.getPrice()%></td>
+						<td width="120">
+							<%
+								DecimalFormat formatter = new DecimalFormat("###,###,###");
+							out.print(formatter.format(Float.parseFloat(sp.getPrice())));
+							%> VNĐ
+						</td>
+						<td width="120">
+							<%
+								out.print(formatter.format(Float.parseFloat(sp.getSale_price())));
+							%> VNĐ
+						</td>
 						<td><%=sp.getQuantity()%></td>
-						<td>
-							<%out.print(new PublisherDAO().getPublisherName(sp.getPublisher_id()));%>
-						</td>
-						<td>
-							<%out.print(new PublisherDAO().getPublisherName(sp.getPublisher_id()));%>
-						</td>
 						<td><a href="Product?chucNang=Delete&id=<%=sp.getId()%>">
 								<button type="button" class="btn btn-sm btn-danger" id=""
 									aria-label="Right Align">
 									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 								</button>
-						</a> <a href="product/product.jsp?id=<%=sp.getId()%>&chucNang=Edit"><button
-									type="button" class="btn  btn-sm btn-warning"
-									aria-label="Right Align">
-									<span class="glyphicon glyphicon-edit"></span>
-								</button></a> <a href="product/product.jsp?id=<%=sp.getId()%>&chucNang=Info"><button
+						</a> <%-- 						<a href="book/book.jsp?id=<%=sp.getId()%>&chucNang=Edit"> --%>
+							<button type="button" class="btn  btn-sm btn-warning"
+								aria-label="Right Align"
+								onclick="edit('<%=sp.getId()%>', '<%=sp.getTitle()%>','<%=sp.getPrice()%>','<%=sp.getPublish_year()%>','<%=sp.getPicture()%>','<%=sp.getPage_number()%>','<%=sp.getQuantity()%>','<%=sp.getQuotes_about()%>','<%=sp.getAuthor_id()%>','<%=sp.getPublisher_id()%>','<%=sp.getCategory_id()%>', '<%=sp.getSale_price()%>')">
+								<span class="glyphicon glyphicon-edit"></span>
+							</button> <!-- 						</a> --> <a
+							href="book/book.jsp?id=<%=sp.getId()%>&chucNang=Info"><button
 									type="button" class="btn  btn-sm btn-primary"
 									aria-label="Right Align">
 									<span class="glyphicon glyphicon-info-sign"></span>
@@ -206,6 +212,129 @@ th {
 
 	</div>
 </body>
+<script type="text/javascript">
+function edit(...params) {
+    $("#editModal .modal-body #name").val(params[1]);
+    $("#editModal .modal-body #id").val(params[0]);
+    $("#editModal .modal-body #price").val(params[2]);
+    $("#editModal .modal-body #publish_year").val(params[3]);
+    $("#editModal .modal-body #picture").val(params[4]);
+    $("#editModal .modal-body #page_number").val(params[5]);
+    $("#editModal .modal-body #quantity").val(params[6]);
+    $("#editModal .modal-body #quotes_about").val(params[7]);
+    $("#editModal .modal-body #author_id").val(params[8]);
+    $("#editModal .modal-body #publisher_id").val(params[9]);
+    $("#editModal .modal-body #category_id").val(params[10]);
+    $("#editModal .modal-body #sale_price").val(params[11]);
+    $("#editModal .modal-body #output").attr("src", "../"+params[4]);
+    $("#editModal").modal();
+}
+</script>
+<!-- Edit Modal HTML -->
+<div id="editModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id="editForm" action="../Product?chucNang=Edit" method="post" enctype="multipart/form-data">
+				<div class="modal-header">
+					<h4 class="modal-title">Chỉnh sửa sách</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					<input type="text" id="id" name="id" hidden>
+					<div class="form-group">
+						<label>Tên sách</label> <input type="text" class="form-control"
+							name="name" id="name" required>
+					</div>
+					<div class="form-group">
+						<label>Giá tiền</label> <input type="number" min="1"
+							class="form-control" name="price" id="price" required>
+					</div>
+					<div class="form-group">
+						<label>Giá sale</label> <input type="number" min="1"
+							class="form-control" name="sale_price" id="sale_price" required>
+					</div>
+					<div class="form-group">
+						<label>Năm xuất bản</label> <input type="number" min="1"
+							max="99999" class="form-control" name="publish_year"
+							id="publish_year">
+					</div>
+					<div class="form-group">
+						<label>Ảnh bìa sách</label> <input id="picture" name="picture"
+							type="text" value="" hidden>
+						<div class="fileinput-preview thumbnail" data-trigger="fileinput"
+							style="width: 150px; height: auto">
+							<img id="output" src="#" style="width: 150px; height: auto">
+						</div>
+						<input type="file" class="form-control-file" name="fileUpload"
+							value="#" onchange="loadFile(event)" accept="image/*" />
+
+						<script>
+			                var loadFile = function (event) {
+			                    var image = document.getElementById('output');
+			                    image.src = URL.createObjectURL(event.target.files[0]);
+			                };
+			            </script>
+					</div>
+					<div class="form-group">
+						<label>Số trang sách</label> <input type="number" min="1"
+							max="99999" class="form-control" name="page_number"
+							id="page_number">
+					</div>
+					<div class="form-group">
+						<label>Số lượng sách</label> <input type="number" min="1"
+							max="99999" class="form-control" name="quantity" id="quantity"
+							required>
+					</div>
+					<div class="form-group">
+						<label>Trích dẫn trong sách</label>
+						<textarea class="form-control" name="quotes_about"
+							id="quotes_about" rows="4" cols="50"></textarea>
+					</div>
+					<div class="form-group">
+						<label>Tác giả</label> <select type="text" class="form-control"
+							name="author_id" id="author_id" required>
+							<%
+								for (Author kh : mapListAuthor.values()) {
+
+								out.print("<option value=" + kh.getId() + ">" + kh.getName() + "</option>");
+							}
+							%>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>Nhà xuất bản</label> <select type="text"
+							class="form-control" name="publisher_id" id="publisher_id"
+							required>
+							<%
+								for (Publisher kh : mapListPublisher.values()) {
+
+								out.print("<option value=" + kh.getId() + ">" + kh.getName() + "</option>");
+							}
+							%>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>Thể loại</label> <select type="text" class="form-control"
+							name="category_id" id="category_id" required>
+							<%
+								for (Category kh : mapListCategory.values()) {
+
+								out.print("<option value=" + kh.getId() + ">" + kh.getName() + "</option>");
+							}
+							%>
+						</select>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn btn-default" data-dismiss="modal"
+						value="Hủy"> <input type="submit" class="btn btn-info"
+						value="Lưu">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 
 <!-- jQuery -->
 <script src="../vendors/jquery/dist/jquery.min.js"></script>

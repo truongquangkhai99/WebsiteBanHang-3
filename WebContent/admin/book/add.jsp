@@ -1,6 +1,10 @@
-<%@page import="dao.ProducerDAO"%>
+<%@page import="dao.PublisherDAO"%>
+<%@page import="dao.AuthorDAO"%>
+<%@page import="dao.CategoryDAO"%>
 <%@page import="java.util.Map"%>
-<%@page import="model.Producer"%>
+<%@page import="model.Publisher"%>
+<%@page import="model.Author"%>
+<%@page import="model.Category"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -151,17 +155,18 @@ pageEncoding="utf-8"%>
 					 <div class="col-sm-10">
 		                  	<div class="row">
 		               			<div class="col-sm-8">
-		               				  <input type="text" class="form-control "   list="listProducer" value="" name="NSXID" placeholder="Nhập mã nhà sản xuất" id="producerID">
+		               				  <select type="text" class="form-control "   list="listProducer" value="" name="NSXID" placeholder="Nhập mã nhà sản xuất" id="producerID">
 		               			
 		               				<datalist id="listProducer">
-										<%Map<String, Producer> mapListProducer = ProducerDAO.mapProducer;
-											for (Producer kh : mapListProducer.values()) {
+										<%Map<String, Publisher> mapListPublisher = PublisherDAO.mapPublisher;
+											for (Publisher kh : mapListPublisher.values()) {
 										%>
-										<option value="<%=kh.getProducerID()%>"><%=kh.getName()%></option>
+										<option value="<%=kh.getId()%>"><%=kh.getName()%></option>
 										<%
 											}
 										%>
 									</datalist>
+									</select>
 		               			</div>
 		               			<div class="col-sm-2">
 									<p id="icon-producerID"></p>

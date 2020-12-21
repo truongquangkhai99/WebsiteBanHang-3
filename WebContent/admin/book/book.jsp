@@ -26,15 +26,15 @@
 		<div class="container">
 		<%if(chucNang.equals("Add")){ %>
 				<div class="row">
-						<jsp:include page="addproduct.jsp"></jsp:include>
+						<jsp:include page="add.jsp"></jsp:include>
 				</div>
 				<%} else if(chucNang.equals("Edit")){ %>
 				<div class="row">
-						<jsp:include page="editproduct.jsp"></jsp:include>
+						<jsp:include page="edit.jsp"></jsp:include>
 				</div>
 				<%} else if(chucNang.equals("Info")){ %>
 				<div class="row">
-						<jsp:include page="infoproduct.jsp"></jsp:include>
+						<jsp:include page="info.jsp"></jsp:include>
 				</div>
 				<%}%>
 		</div>
