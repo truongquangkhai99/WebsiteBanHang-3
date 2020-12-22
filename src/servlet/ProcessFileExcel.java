@@ -17,7 +17,7 @@ import model.User;
 import model.Order;
 import model.Book;
 
-@WebServlet("/Excel")
+@WebServlet("/admin/Excel")
 public class ProcessFileExcel extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -56,7 +56,7 @@ public class ProcessFileExcel extends HttpServlet {
 					new BookDAO().add(sp);
 				}
 			}
-			response.sendRedirect("showproduct.jsp");
+			response.sendRedirect("showbook.jsp");
 
 		} else
 		// chức năng import đơn hàng từ excel

@@ -11,6 +11,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 // import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -53,20 +54,23 @@ public class SecurityFilter implements Filter {
 		 
         String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
         HttpSession session = httpRequest.getSession(false);
+        String requestURL = ((HttpServletRequest) req).getRequestURI();
         
         if (path.startsWith("/admin/")) {        	 
             boolean isLoggedIn = (session != null && session.getAttribute("adminUser") != null);
      
             String loginURI = httpRequest.getContextPath() + "/admin/login";
+            String test = httpRequest.getRequestURI();
             boolean isLoginRequest = httpRequest.getRequestURI().equals(loginURI);
             boolean isLoginPage = httpRequest.getRequestURI().endsWith("login.jsp");
+            boolean isResource = httpRequest.getRequestURI().endsWith(".png");
      
             if (isLoggedIn && (isLoginRequest || isLoginPage)) {
                 // the user is already logged in and he's trying to login again
                 // then forward to the homepage
                 httpRequest.getRequestDispatcher("/admin").forward(req, resp);
      
-            } else if (isLoggedIn || isLoginRequest) {
+            } else if (isResource ||isLoggedIn || isLoginRequest || isLoginPage) {
                 // continues the filter chain
                 // allows the request to reach the destination
                 chain.doFilter(req, resp);
@@ -74,8 +78,12 @@ public class SecurityFilter implements Filter {
             } else {
                 // the admin is not logged in, so authentication is required
                 // forwards to the Login page
-                RequestDispatcher dispatcher = req.getRequestDispatcher("login.jsp");
-                dispatcher.forward(req, resp);
+            	String loginURL = req.getScheme()+"://"+
+                        req.getServerName()+":"+req.getServerPort()
+                        +"/WebsiteBanHang/admin/login.jsp";
+            	((HttpServletResponse) resp).sendRedirect(loginURL+"?returnURL="+requestURL);
+//                RequestDispatcher dispatcher = req.getRequestDispatcher("login.jsp");
+//                dispatcher.forward(req, resp);
      
             }
         }

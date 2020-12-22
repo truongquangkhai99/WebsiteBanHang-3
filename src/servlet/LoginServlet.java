@@ -52,7 +52,8 @@ public class LoginServlet extends HttpServlet {
 			else {
 				session.setAttribute("customerUser", kh);
 			}
-			response.sendRedirect(request.getParameter("from"));
+//			String hello1 = request.getParameter("returnURL");
+			response.sendRedirect(request.getParameter("returnURL"));
 		}
 		else {
 			request.setAttribute("errorString", "Tên tài khoản hoặc mật khẩu không đúng, vui lòng thử lại.");
