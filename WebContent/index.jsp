@@ -6,6 +6,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	Map<String, Book> mapListProduct = BookDAO.mapSanPham;
+
+	Map<String, Book> mapListProductByPage = BookDAO.laySachTheoTrang(1);
+
+	int totalPage = mapListProduct.size();
+	int totalP;
+	if(totalPage % 9 == 0){
+		totalP = totalPage % 9;
+	} else {
+		totalP = totalPage / 9 + 1;
+	}
 %>
 <%!
 	public String percentBook(String a, String b) {
@@ -118,7 +128,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 			<div class="col-md-9">
 				<div class="shoe">
-					<img class="img-responsive" src="images/banner.jpg" alt="">
+					<img class="img-responsive" src="images/banner_02.jpg" alt="">
 					<div class="shop">
 						<h4>
 							SHOP<span>BOOK</span>
@@ -131,7 +141,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="bottom-grid">
 						<%
 							int count = 0;
-							for (Book sp : mapListProduct.values()) {
+							for (Book sp : mapListProductByPage.values()) {
 								count++;
 						%>
 						<div class="col-md-4 shirt" style="margin-bottom: 20px">
@@ -163,11 +173,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<li class="page-item"><a href="#" class="page-link"
 								aria-label="Previous"> <span aria-hidden="true">«</span>
 							</a></li>
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item active"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#">4</a></li>
-							<li class="page-item"><a class="page-link" href="#">5</a></li>
+							<li class="page-item" style="display: flex; justify-content: center; align-items: center; font-size: 18px; color: #fe1739;">
+								<p><% out.print(1);%></p>
+							</li>
 							<li class="page-item"><a href="#" class="page-link"
 								aria-label="Next"> <span aria-hidden="true">»</span>
 							</a></li>

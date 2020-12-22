@@ -196,7 +196,7 @@ public class UserDAO implements ObjectDAO {
 		System.out.println(new UserDAO().passwordRecovery("anhdinh", "nguyenlephong1997@gmail.com"));
 	}
 
-	public String getNameCustomer(String id) {
+	public static String getNameCustomer(String id) {
 		String name = "";
 		for (User kh : mapKhachHang.values()) {
 			if (kh.getId().equals(id)) {

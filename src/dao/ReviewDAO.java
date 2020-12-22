@@ -49,7 +49,7 @@ public class ReviewDAO implements ObjectDAO {
 				String user_id = rs.getString(5);
 				String book_id = rs.getString(6);
 
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
 				LocalDateTime dateTime = LocalDateTime.parse(post_date, formatter);
 
 				Review review = new Review(id, dateTime, star, comment, user_id, book_id);
@@ -100,4 +100,14 @@ public class ReviewDAO implements ObjectDAO {
 		return true;
 	}
 
+	public static Map<String, Review> layDuLieuDanhGiaCuaSach(String idBook) {
+		Map<String, Review> map = new HashMap<>();
+		if(!mapReview.isEmpty())
+		for (Review reivew : mapReview.values()) {
+			if(reivew.getBook_id().equals(idBook))
+				map.put(reivew.getId(), reivew);
+		}
+
+		return map;
+	}
 }

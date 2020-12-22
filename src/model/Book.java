@@ -15,6 +15,8 @@ public class Book {
 	String category_id;
 	String _new;
 	
+    public Book() {}
+    
 	public Book(String id, String title, String price, String sale_price, String publish_year, String picture,
 			String page_number, String quantity, String quotes_about, String author_id, String publisher_id,
 			String category_id, String _new) {
@@ -32,6 +34,15 @@ public class Book {
 		this.publisher_id = publisher_id;
 		this.category_id = category_id;
 		this._new = _new;
+	}
+	
+	public Book(String id, String title, String price, String sale_price, String category_id) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.price = price;
+		this.sale_price = sale_price;
+		this.category_id = category_id;
 	}
 	
 	public String getId() {
@@ -114,7 +125,7 @@ public class Book {
 	public void set_new(String _new) {
 		this._new = _new;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Book [id=" + id + ", title=" + title + ", price=" + price + ", sale_price=" + sale_price
