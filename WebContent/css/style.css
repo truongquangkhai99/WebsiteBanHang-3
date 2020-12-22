@@ -366,12 +366,22 @@ ul.social-in li  i:hover {
 	float: left;
 	width: 50%;
 }
-
+.list_desc h4 {
+	color: #7db122;
+	font-size: 13px;
+	text-decoration: none;
+	font-weight: 700;
+	line-height: 1.5em;
+    height: 3em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+}
 .list_desc h4 a {
 	color: #7db122;
 	font-size: 13px;
 	text-decoration: none;
-	text-transform: uppercase;
 }
 
 a.offer {
@@ -1206,7 +1216,7 @@ a.cart-to:hover {
 	text-decoration: underline;
 }
 
-a.cart-an {
+a.cart-an, .content .col-md-9 .col-md-7.single-top-in .single-para form button.cart-an {
 	color: #fff;
 	background: #f02b63;
 	text-decoration: none;
@@ -1217,10 +1227,13 @@ a.cart-an {
 	-o-border-radius: 5px;
 	-moz-border-radius: 5px;
 	-ms-border-radius: 5px;
+	transition: 0.8s;
 }
 
-a.cart-an:hover {
+a.cart-an:hover, .content .col-md-9 .col-md-7.single-top-in .single-para form button.cart-an:hover {
 	background: #4cb1ca;
+	transition: 0.8s;
+	
 }
 
 .single-para h5 {
@@ -1339,6 +1352,17 @@ a.cart-an:hover {
 
 .grid-flex {
 	margin: 10px 0 20px 0;
+}
+.grid-flex p {
+	color: #818181;
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1.5em;
+    height: 3em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
 }
 
 .nbs-flexisel-item a {

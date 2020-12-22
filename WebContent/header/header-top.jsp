@@ -13,7 +13,7 @@
 <body>
 		<div class="header" id="home">	
 			<div class="header-para">
-				<p><i>Đọc được nhiều sách tốt nhưng nếu không đem áp dụng vào thực tiễn cuộc sống thì chẳng khác nào “cái hòm đựng sách”.</i></span></p>	
+				<p><i style="font-size: 13px;">Đọc được nhiều sách tốt nhưng nếu không đem áp dụng vào thực tiễn cuộc sống thì chẳng khác nào “cái hòm đựng sách”.</i></span></p>	
 			</div>	
 			<ul class="header-in">
 				<li>

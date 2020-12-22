@@ -8,6 +8,8 @@
 <%@page import="model.Publisher"%>
 <%@page import="dao.AuthorDAO"%>
 <%@page import="model.Author"%>
+<%@page import="model.Review"%>
+<%@page import="dao.ReviewDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import=" java.util.HashMap"%>
 <%@page import=" java.util.Map"%>
@@ -19,6 +21,8 @@
 	Map<String, Category> mapListCategory = CategoryDAO.mapLoaiSanPham;
 	Map<String, Author> mapListAuthor = AuthorDAO.mapTacGia;
 	Set<String> setPublisher = BookDAO.getSetPublisher();
+	Map<String, Review> mapListReviews = ReviewDAO.mapReview;
+	
 	
 	String x = request.getParameter("id");
 	Book detailBook = BookDAO.mapSanPham.get(x);
@@ -29,6 +33,8 @@
 	Publisher detailPublisher = PublisherDAO.mapPublisher.get(publisherId);
 	Author detailAuthor = AuthorDAO.mapTacGia.get(authorId);
 	Category detailCategory = CategoryDAO.mapLoaiSanPham.get(categoryId);
+	
+	Map<String, Book> mapListBookRelate = BookDAO.layDuLieuSachLienQuan(categoryId);
 %>
 <%!
 	public String formatMoney(String a) {
@@ -173,47 +179,52 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="single-para">
 						<h4><% out.print(detailBook.getTitle());%></h4>
 						<div class="para-grid">
-							<span class="add-to"><%=formatMoney(detailBook.getPrice())%>₫</span> 
+							<span class="add-to"><%=formatMoney(detailBook.getSale_price())%>₫</span> 
 							<span class="line-through"><%=formatMoney(detailBook.getPrice())%>₫</span>
 							<p class="">-<%=percentBook(detailBook.getSale_price(), detailBook.getPrice())%>%</p>
 							<div class="clearfix"></div>
 						</div>
 						<h5>Còn <%=detailBook.getQuantity()%> sản phẩm</h5>
-						<div class="available">
-							<h6>Số lượng :</h6>
-							<div class="container-quantity">
-								<span class="btn-next" onclick="nextNumQuantity()"></span>
-								<span class="btn-prev" onclick="prevNumQuantity()"></span>
-								<div id="box-quantity">
-									<input type="text" id="quantity" value="1">
+						<form action="CartServlet?bookId=<%=detailBook.getId()%>&action=add" method="post">
+						
+							<div class="available">
+								<h6>Số lượng :</h6>
+								<div class="container-quantity">
+									<span class="btn-next" onclick="nextNumQuantity()"></span>
+									<span class="btn-prev" onclick="prevNumQuantity()"></span>
+									<div id="box-quantity">
+										<input type="text" id="quantity" name="quantity" value="1">
+									</div>
 								</div>
-							</div>
-							<script type="text/javascript">
-								var valueCount;
-								
-								function nextNumQuantity() {									
-									valueCount = document.getElementById("quantity").value;
-						            if (valueCount >= <%=detailBook.getQuantity()%>) {
-						            }
-						            else {
-										valueCount++;
-										document.getElementById("quantity").value = valueCount;
-						            }
-								}
-								function prevNumQuantity() {
-									valueCount = document.getElementById("quantity").value;
+								<script type="text/javascript">
+									var valueCount;
 									
-						            if (valueCount == 1) {
-						            }
-						            else {
-						            	valueCount--;
-										document.getElementById("quantity").value = valueCount;
-						            }
-								}
-							</script>
-						</div>
+									function nextNumQuantity() {									
+										valueCount = document.getElementById("quantity").value;
+							            if (valueCount >= <%=detailBook.getQuantity()%>) {
+							            }
+							            else {
+											valueCount++;
+											document.getElementById("quantity").value = valueCount;
+											const xxx = valueCount;
+							            }
+									}
+									function prevNumQuantity() {
+										valueCount = document.getElementById("quantity").value;
+										
+							            if (valueCount == 1) {
+							            }
+							            else {
+							            	valueCount--;
+											document.getElementById("quantity").value = valueCount;
+											const xxx = valueCount;
+							            }
+									}
+								</script>
+							</div>
+							<button type="submit" class="cart-an">Thêm vào giỏ</button>
+						</form>
 
-						<a href="#" class="cart-an ">Thêm vào giỏ</a>
 						<div class="share">
 							<h4>Chia sẻ sản phẩm với: </h4>
 							<ul class="share_nav">
@@ -232,31 +243,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 				<h4 style="margin: 20px 0;">SẢN PHẨM TƯƠNG TỰ</h4>
 				<ul id="flexiselDemo1">
-					<li><img src="images/pi.jpg" />
-					<div class="grid-flex">
-							<a href="#">Lorem</a>
-							<p>Rs 850</p>
-						</div></li>
-					<li><img src="images/pi1.jpg" />
-					<div class="grid-flex">
-							<a href="#">Amet</a>
-							<p>Rs 850</p>
-						</div></li>
-					<li><img src="images/pi2.jpg" />
-					<div class="grid-flex">
-							<a href="#">Simple</a>
-							<p>Rs 850</p>
-						</div></li>
-					<li><img src="images/pi3.jpg" />
-					<div class="grid-flex">
-							<a href="#">Text</a>
-							<p>Rs 850</p>
-						</div></li>
-					<li><img src="images/pi4.jpg" />
-					<div class="grid-flex">
-							<a href="#">Sit</a>
-							<p>Rs 850</p>
-						</div></li>
+					<%
+						for (Book sp : mapListBookRelate.values()) {
+					%>
+						<li>
+							<img style="height: 200px" src="<%=sp.getPicture()%>" />
+							<div class="grid-flex">
+								<p style="padding: 0px;"><a href="Book?id=<%=sp.getId()%>&func=Detail"><%=sp.getTitle()%></a></p>
+								<span style="padding: 0px;"><%=formatMoney(sp.getSale_price())%>₫</span>
+							</div>
+						</li>
+					<%
+						}
+					%>
 				</ul>
 				<script type="text/javascript">
 					$(window).load(function() {
