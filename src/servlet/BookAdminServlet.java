@@ -19,7 +19,7 @@ import model.Book;
 /**
  * Servlet implementation class BookServlet
  */
-@WebServlet("/admin/Book")
+@WebServlet("/admin/book")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
 		maxFileSize = 1024 * 1024 * 10, // 10MB
 		maxRequestSize = 1024 * 1024 * 50) // 50MB
@@ -160,7 +160,7 @@ public class BookAdminServlet extends HttpServlet {
 					String publisher_id =request.getParameter("publisher_id");
 					String category_id =request.getParameter("category_id");
 					String _new =request.getParameter("_new");
-					String id = "" + BookDAO.mapSanPham.size();
+					String id = "" + BookDAO.mapSanPham.size()+1;
 					Book book = new Book(id, title, price, sale_price, publish_year, picture, page_number, quantity,
 							quotes_about, author_id, publisher_id, category_id, _new);
 					new BookDAO().add(book);

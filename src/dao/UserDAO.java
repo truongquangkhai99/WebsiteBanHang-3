@@ -28,7 +28,7 @@ public class UserDAO implements ObjectDAO {
 	public static Map<String, User> mapUndo = new HashMap<>();
 
 	public UserDAO() {
-
+		
 	}
 
 	private static Map<String, User> loadData() {
@@ -73,6 +73,15 @@ public class UserDAO implements ObjectDAO {
 		} else {
 			return false;
 		}
+	}
+	
+	public static User getUserByID(String id) {
+		mapKhachHang = loadData();
+		for(User user: mapKhachHang.values()) {
+			if(user.getId().equals(id))
+				return user;
+		}
+		return null;
 	}
 
 	@Override

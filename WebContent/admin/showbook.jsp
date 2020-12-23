@@ -287,7 +287,7 @@ Set<String> setPublisher = BookDAO.getSetPublisher();
 			<%
 				if (!BookDAO.mapSanPham.isEmpty()) {
 			%>
-			<a href="Book?chucNang=UndoAll"><button
+			<a href="book?chucNang=UndoAll"><button
 					class="btn btn-sm btn-success" id="">
 					<i class="fa fa-undo" aria-hidden="true"></i> Undo all
 				</button></a>
@@ -297,7 +297,7 @@ Set<String> setPublisher = BookDAO.getSetPublisher();
 			<%
 				if (!UndoDAO.undoBook.isEmpty()) {
 			%>
-			<a href="Book?chucNang=UndoOne"><button
+			<a href="book?chucNang=UndoOne"><button
 					class="btn btn-sm btn-success" id="">
 					<i class="fa fa-undo" aria-hidden="true"></i> Undo
 				</button></a>
@@ -360,7 +360,7 @@ Set<String> setPublisher = BookDAO.getSetPublisher();
 							<button type="button" class="btn  btn-sm btn-warning" aria-label="Right Align" onclick="edit('<%=sp.getId()%>', '<%=sp.getTitle()%>','<%=sp.getPrice()%>','<%=sp.getPublish_year()%>','<%=sp.getPicture()%>','<%=sp.getPage_number()%>','<%=sp.getQuantity()%>','<%=sp.getQuotes_about()%>','<%=sp.getAuthor_id()%>','<%=sp.getPublisher_id()%>','<%=sp.getCategory_id()%>', '<%=sp.getSale_price()%>')">
 								<span class="glyphicon glyphicon-edit"></span>
 							</button>
-							<a href="book/book.jsp?id=<%=sp.getId()%>&chucNang=Info">
+							<a href="book/info.jsp?id=<%=sp.getId()%>&chucNang=Info">
 								<button	type="button" class="btn  btn-sm btn-primary"
 									aria-label="Right Align">
 									<span class="glyphicon glyphicon-info-sign"></span>
@@ -392,7 +392,7 @@ Set<String> setPublisher = BookDAO.getSetPublisher();
 	function Remove(Id) {
         $.ajax({
             type: 'POST',
-            url: 'Book?chucNang=Delete',
+            url: 'book?chucNang=Delete',
             data: { id: Id },
             success: function (data) {
 				$("#deletedModal").modal();
@@ -530,7 +530,7 @@ Set<String> setPublisher = BookDAO.getSetPublisher();
 <div id="addModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="addForm" action="Book?chucNang=Add" method="post" enctype="multipart/form-data">
+            <form id="addForm" action="book?chucNang=Add" method="post" enctype="multipart/form-data">
                 <div class="modal-header" style="background-color: #5cb85c;color: white;text-align: center;font-size: 30px;">
                     <h4 class="modal-title">Thêm sách</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -622,7 +622,7 @@ Set<String> setPublisher = BookDAO.getSetPublisher();
 <div id="editModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id="editForm" action="Book?chucNang=Edit" method="post" enctype="multipart/form-data">
+			<form id="editForm" action="book?chucNang=Edit" method="post" enctype="multipart/form-data">
 				<div class="modal-header" style="background-color: #ec971f;color: white;text-align: center;font-size: 30px;">
 					<h4 class="modal-title">Chỉnh sửa sách</h4>
 					<button type="button" class="close" data-dismiss="modal"

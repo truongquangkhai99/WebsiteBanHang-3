@@ -24,11 +24,14 @@
 
 </head>
 <body>
+	<header>
+		<jsp:include page="../menu/menucap2.jsp"></jsp:include>
+	</header>
 	<div class="container">
 		<div class="row">
 			<h2>
 				<strong>Thông tin tác giả</strong>
-				<a href="showcustomer.jsp" style="float: right"> <button class="btn btn-success btn-sm" ><i class="fa fa-undo" aria-hidden="true"></i> Trở về</button></a>
+				<a href="../author" style="float: right"> <button class="btn btn-success btn-sm" ><i class="fa fa-undo" aria-hidden="true"></i> Trở về</button></a>
 			</h2>
 			<hr>
 		</div>
