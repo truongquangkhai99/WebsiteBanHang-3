@@ -286,12 +286,13 @@
 						int count = 0;
 						for (Order od : mapListOrder.values()) {
 							count++;
+							int order_status = 0;
 					%>
 					<tr>
 						<td><%=count%></td>
 						<td><%out.print(new BookDAO().getNameBook(od.getId()));%></td>
 						<td><%out.print(UserDAO.getNameCustomer(od.getUser_id()));%></td>
-						<td><%=od.getStatus()%></td>
+						<td><span style="font-size:50" class="status text-info">&bull;</span><%=od.getStatus()%></td>
 						<td><%=od.getOrder_date()%></td>
 						<td><%DecimalFormat formatter = new DecimalFormat("###,###,###");
 						out.print(formatter.format(od.getTotal())); %> VNĐ</td>
@@ -300,7 +301,7 @@
 								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 							</button>
 							
-							<button type="button" class="btn  btn-sm btn-warning" aria-label="Right Align" onclick="edit('<%=od.getId()%>', '')">
+							<button type="button" class="btn  btn-sm btn-warning" aria-label="Right Align" onclick="edit('<%=od.getId()%>', '<%=od.getStatus()%>')">
 								<span class="glyphicon glyphicon-edit"></span>
 							</button>
 							
@@ -370,11 +371,8 @@
     }
 
 	function edit(...params) {
-		$("#editModal .modal-body #name").val(params[1]);
+		$("#editModal .modal-body #order_status").val(params[1]);
 		$("#editModal .modal-body #id").val(params[0]);
-		$("#editModal .modal-body #info").val(params[2]);
-		$("#editModal .modal-body #picture").val(params[3]);
-		$("#editModal .modal-body #output1").attr("src", "../"+params[3]);
 		$("#editModal").modal();
 	}
 
@@ -382,16 +380,12 @@
         $("#editForm").submit(function(e) {
             e.preventDefault(); // avoid to execute the actual submit of the form.
 			var form = $(this);
-			var formData = new FormData($(this)[0]);
             var url = form.attr('action');
             $("#editModal").modal('hide');
             $.ajax({
                 type: "POST",
 				url: url,
-				contentType: false,
-				processData: false,
-				enctype: 'multipart/form-data',
-				data: formData,
+				data: form.serialize(),
                 success: function(data)
                 {
                     $("#deletedModal").modal();
@@ -405,32 +399,6 @@
             });
             
         });
-        $("#addForm").submit(function(e) {
-            e.preventDefault(); // avoid to execute the actual submit of the form.
-			var form = $(this);
-			var formData = new FormData($(this)[0]);
-            var url = form.attr('action');
-            $("#addModal").modal('hide');
-            $.ajax({
-				type: "POST",
-				url: url,
-				contentType: false,
-				processData: false,
-				enctype: 'multipart/form-data',
-				data: formData,
-                success: function(data)
-                {
-                    $("#deletedModal").modal();
-                    $('#deletedModal').on('hide.bs.modal', function (e) {
-						location.reload();
-					})
-                },
-                error: function(xhr, status, error) {
-                    alert("Đã có lỗi xảy ra khi truy vấn ");
-                }
-            });
-            
-		});
 	})
 	
 </script>
@@ -498,72 +466,27 @@
         </div>
     </div>
 </div>
-<!-- Add Modal HTML -->
-<div id="addModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form id="addForm" action="order?chucNang=Add" method="post" enctype="multipart/form-data">
-                <div class="modal-header" style="background-color: #5cb85c;color: white;text-align: center;font-size: 30px;">
-                    <h4 class="modal-title">Thêm sách</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-						<label>Tên tác giả</label> <input type="text" class="form-control"
-							name="name" id="name" required>
-					</div>
-					<div class="form-group">
-						<label>Thông tin</label> <textarea type="text" rows="4" cols="50"
-                            class="form-control" name="info" id="info"></textarea>
-					</div>
-					<div class="form-group">
-						<label>Ảnh bìa sách</label> <input id="picture" name="picture"
-							type="text" value="" hidden>
-						<div class="fileinput-preview thumbnail" data-trigger="fileinput"
-							style="width: 150px; height: auto">
-							<img id="output" src="#" style="width: 150px; height: auto">
-						</div>
-						<input type="file" class="form-control-file" name="fileUpload"
-							value="#" onchange="loadFile(event, true)" accept="image/*" />
-					</div>
-                </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
-                    <input type="submit" class="btn btn-info" value="Lưu">
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 <!-- Edit Modal HTML -->
 <div id="editModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<form id="editForm" action="order?chucNang=Edit" method="post" enctype="multipart/form-data">
 				<div class="modal-header" style="background-color: #ec971f;color: white;text-align: center;font-size: 30px;">
-					<h4 class="modal-title">Chỉnh sửa sách</h4>
+					<h4 class="modal-title">Cập nhật đơn hàng</h4>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
 					<input type="text" id="id" name="id" hidden>
 					<div class="form-group">
-						<label>Tên tác giả</label> <input type="text" class="form-control"
-							name="name" id="name" required>
-					</div>
-					<div class="form-group">
-						<label>Thông tin</label> <textarea type="text" rows="4" cols="50"
-                            class="form-control" name="info" id="info"></textarea>
-					</div>
-					<div class="form-group">
-						<label>Ảnh bìa sách</label> <input id="picture" name="picture"
-							type="text" value="" hidden>
-						<div class="fileinput-preview thumbnail" data-trigger="fileinput"
-							style="width: 150px; height: auto">
-							<img id="output1" src="#" style="width: 150px; height: auto">
-						</div>
-						<input type="file" class="form-control-file" name="fileUpload"
-							value="#" onchange="loadFile(event, false)" accept="image/*" />
+						<label>Trạng thái</label>
+						<select class="form-control" style="width:250px" id="order_status" name="order_status">
+							<option value="Đặt hàng">Đặt hàng</option>
+							<option value="Đóng gói">Đóng gói</option>
+							<option value="Vận chuyển">Vận chuyển</option>
+							<option value="Nhận hàng">Nhận hàng</option>
+							<option value="Hủy">Hủy</option>
+						</select>
 					</div>
 				</div>
 				<div class="modal-footer">
