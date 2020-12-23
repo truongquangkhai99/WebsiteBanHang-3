@@ -1,3 +1,4 @@
+<%@page import="model.User"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -10,7 +11,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+<% User user = (User)session.getAttribute("adminUser"); %>
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -24,6 +25,8 @@
       <li><a href="category" > <i class="fa fa-bookmark" aria-hidden="true"></i>  Thể loại</a></li>
       <li><a href="author" > <i class="fa fa-edit" aria-hidden="true"></i>  Tác giả</a></li>
       <li><a href="publisher" > <i class="fa fa-cubes" aria-hidden="true"></i>  NXB</a></li>
+      <li style="margin-left:50px"><a href="showcustomer.jsp" > <i class="fa fa-user" aria-hidden="true"></i>  <% out.print(user.getName()); %></a></li>
+      <li><a href="../Login?action=logout" > <i class="fa fa-window-close" aria-hidden="true"></i>  Đăng xuất</a></li>
     </ul>
   </div>
 </nav>
