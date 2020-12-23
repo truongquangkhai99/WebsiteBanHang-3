@@ -17,7 +17,7 @@ public class Publisher {
 		this.id = id;
 	}
 	public String getName() {
-		return name;
+		return name.replace("\n", "").replace("\r", "");
 	}
 	public void setName(String name) {
 		this.name = name;

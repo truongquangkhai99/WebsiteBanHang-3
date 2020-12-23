@@ -1,14 +1,19 @@
 package servlet;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.CategoryDAO;
+import model.Category;
 
-@WebServlet("/CategoryProcess")
+
+@WebServlet("/admin/category")
 public class CategoryProcessServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	   
@@ -19,12 +24,53 @@ public class CategoryProcessServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("text/html;charset=utf-8");
+		
+		response.sendRedirect("showcategory.jsp");
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		try {
+			// request.setCharacterEncoding("utf-8");
+			response.setCharacterEncoding("utf-8");
+			response.setCharacterEncoding("text/html;charset=utf-8");
+
+			// Add vào BookDAO
+			String chucNang = request.getParameter("chucNang");
+			String categoryID = request.getParameter("id");
+			if (chucNang == null) {
+
+			} else
+			// delete
+			if (chucNang.equals("Delete")) {
+				new CategoryDAO().del(categoryID);
+			} else {
+				response.sendRedirect(request.getContextPath() + "/");
+				// Edit
+				if (chucNang.equals("Edit")) {
+					String id = request.getParameter("id");
+					String name = request.getParameter("name");
+					
+					Category category = new Category(id, name);
+					new CategoryDAO().edit(categoryID, category);
+				} else
+				// Add
+				if (chucNang.equals("Add")) {
+					String name = request.getParameter("name");
+					String id = "" + CategoryDAO.mapLoaiSanPham.size()+1;
+					Category category = new Category(id, name);
+					new CategoryDAO().add(category);
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.setAttribute("errorMessage", "Error: " + e.getMessage());
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsps/uploadFile.jsp");
+		}
 	}
 
 }

@@ -76,35 +76,8 @@ th {
 	<div class="container">
 		<div class="row">
 			<h2>
-				Thống kê
+				TriThucOnline Admin Dashboard
 			</h2>
-		</div>
-		<div class="row" style="margin-bottom:10px">
-			<div class="dropdown" style="float: left">
-			  <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">Chọn ngày đặt hàng
-			  <span class="caret"></span></button>
-			  <ul class="dropdown-menu">
-			  <%for(String date:setDateOrder) {%>
-			    <li><a href="Dropdown?chucNang=Order&date=<%=date%>"><%=date %></a></li>
-				<%} %>			 
-  				<li class="divider"></li>
-			    <li><a href="Dropdown?chucNang=AllOrder">Tất cả</a></li>
-			  </ul>
-			</div>
-			<a style="margin-left:10px" href="order/order.jsp?chucNang=Add"><button class="btn btn-sm btn-success" id="Them"><span class="glyphicon glyphicon-plus"></span>   Thêm đơn hàng</button></a>
-			<a href="Order?chucNang=DelAll"><button class="btn btn-sm btn-success" id=""><span class="glyphicon glyphicon-trash"></span>  Xóa tất cả</button></a>
-			
-			<%if(!OrderDAO.mapUndo.isEmpty()){ %>
-				<a href="Order?chucNang=UndoAll"><button class="btn btn-sm btn-success" id=""><i class="fa fa-undo" aria-hidden="true"></i>  Undo</button></a>
-			<%} %>
-			<%if(!UndoDAO.undoOrder.isEmpty()){ %>
-				<a href="Order?chucNang=UndoOne"><button class="btn btn-sm btn-success" id=""><i class="fa fa-undo" aria-hidden="true"></i>  Undo</button></a>
-			<%} %>
-			
-			<button  type="button" class="btn btn-info" data-toggle="collapse" data-target="#excel"><i class="fa fa-file-excel-o" aria-hidden="true"></i>   Import file excel</button>
-					<div id="excel" class="collapse">
-	         		   <jsp:include page="importExcel/importorder.jsp"></jsp:include>
-	              </div>
 		</div>
 
 		<div class="span-2c">

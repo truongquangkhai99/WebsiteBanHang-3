@@ -3,7 +3,9 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -30,6 +32,17 @@ public class OrderDetailDAO implements ObjectDAO {
 		mapOrder.putAll(mapUndo);
 		mapUndo.clear();
 		return true;
+	}
+
+	public static List<Order_detail> getDetailByOrderID(String orderID){
+		List<Order_detail> list = new ArrayList<>();
+		getLoadOrderDTB();
+		for(Order_detail od: mapOrder.values()){
+			if(od.getOrder_id().equals(orderID)){
+				list.add(od);
+			}
+		}
+		return list;
 	}
 
 	public int random(int limit) {

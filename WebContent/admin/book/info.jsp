@@ -29,6 +29,9 @@ Book book = BookDAO.mapSanPham.get(id);
 
 </head>
 <body>
+<header>
+	<jsp:include page="../menu/menucap2.jsp"></jsp:include>
+</header>
 	<div class="container">
 		<div class="row">
 			<h2>

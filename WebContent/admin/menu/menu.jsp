@@ -14,17 +14,17 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="index.jsp"><span class="glyphicon glyphicon-check"></span>Admin</a>
+      <a class="navbar-brand" href="Report"><span class="glyphicon glyphicon-check"></span>Admin</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="index.jsp"><span class="glyphicon glyphicon-user"></span>  Giới thiệu</a></li>
+      <li class="active"><a href="Report"><span class="glyphicon glyphicon-user"></span>  Dashboard</a></li>
       <li><a href="showcustomer.jsp"><i class="fa fa-users" aria-hidden="true"></i>  Khách hàng</a></li>
-      <li><a href="showbook.jsp" > <i class="fa fa-car" aria-hidden="true"></i>  Sản phẩm</a></li>
-      <li><a href="showorder.jsp" > <i class="fa fa-list-alt" aria-hidden="true"></i>  Đơn hàng</a></li>
-      <li><a href="showorder.jsp" > <i class="fa fa-list-alt" aria-hidden="true"></i>  Cập nhật</a></li>
+      <li><a href="book" > <i class="fa fa-book" aria-hidden="true"></i>  Sản phẩm</a></li>
+      <li><a href="order" > <i class="fa fa-list-alt" aria-hidden="true"></i>  Đơn hàng</a></li>
+      <li><a href="category" > <i class="fa fa-bookmark" aria-hidden="true"></i>  Thể loại</a></li>
+      <li><a href="author" > <i class="fa fa-edit" aria-hidden="true"></i>  Tác giả</a></li>
+      <li><a href="publisher" > <i class="fa fa-cubes" aria-hidden="true"></i>  NXB</a></li>
     </ul>
-    <a href="orderonline.jsp"><button class="btn btn-danger navbar-btn"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Đặt hàng online</button></a>
-    <a href="note.jsp"><button class="btn btn-success navbar-btn"><span class="glyphicon glyphicon-info-sign"></span>  Mô tả chức năng</button></a>
   </div>
 </nav>
 <div style="margin-bottom:40px"></div>

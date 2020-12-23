@@ -1,9 +1,11 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -18,7 +20,8 @@ public class OrderDAO implements ObjectDAO {
 
 	public static Map<String, Order> mapOrder = getLoadOrderDTB();
 	public static Map<String, Order> mapUndo = new HashMap<>();
-	public static Set<String> setDateOrder =  getSetDateOrder();
+	public static Set<String> setDateOrder = getSetDateOrder();
+
 	public OrderDAO() {
 
 	}
@@ -76,13 +79,20 @@ public class OrderDAO implements ObjectDAO {
 		return false;
 	}
 
-	public  Map<String, Order> getSelectOrderDate(String date) {
+	public Map<String, Order> getSelectOrderDate(String date) {
 		Map<String, Order> mapSelectProduct = new HashMap<>();
-		for (Order sp : mapOrder.values()) {
-			if (sp.getOrder_date().equals(date)) {
-				mapSelectProduct.put(sp.getId(), sp);
+		try {
+			java.util.Date dateD = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+			for (Order sp : mapOrder.values()) {
+				if (sp.getOrder_date().equals(dateD)) {
+					mapSelectProduct.put(sp.getId(), sp);
+				}
 			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 		return mapSelectProduct;
 	}
 
