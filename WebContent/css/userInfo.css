@@ -53,14 +53,15 @@
     position: absolute;
 }
 .info-user .container .right-box .tab-show h1 {
-    font-size: 1.2rem;
+    font-size: 18px;
+    font-weight: bold;
     font-family: "Montserrat", sans-serif;
     color: #7ed386;
     margin-top: 40px;
     margin-bottom: 35px;
 }
 .info-user .container .right-box .tab-show h2 {
-    font-size: 8px;
+    font-size: 12px;
     font-family: "Roboto", sans-serif;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -72,7 +73,7 @@
     border-bottom: 1px solid #3fb6a8;
     width: 80%;
     font-family: "Montserrat", sans-serif;
-    font-size: 0.7em;
+    font-size: 12px;
     padding:  7px 0;
     color: #070707;
     outline: none;
@@ -98,3 +99,57 @@
 .info-user .container .right-box .tab-show {
     display: none;
 }
+
+.info-user .container .right-box .tab-show.subscription .container-order {
+	width: 80%;
+	height: 320px;
+	overflow-y: scroll;
+	padding: 10px;
+}
+.info-user .container .right-box .tab-show.subscription .order {
+	padding: 5px 10px;
+	box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.8);
+-webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.8);
+-moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.8);
+	border-radius: 10px;
+	position: relative;
+	margin-bottom: 25px;
+} 
+.info-user .container .right-box .tab-show.subscription .order .date-order,
+.info-user .container .right-box .tab-show.subscription .order .status-order,
+.info-user .container .right-box .tab-show.subscription .order .total-money-order {
+	display: flex;
+	justify-content: space-between;
+}
+.info-user .container .right-box .tab-show.subscription .order .date-order p,
+.info-user .container .right-box .tab-show.subscription .order .status-order p,
+.info-user .container .right-box .tab-show.subscription .order .total-money-order p {
+	border: none;
+}
+.info-user .container .right-box .tab-show.subscription .order a {
+	position: absolute;
+	bottom: -10px;
+	right: 10px;
+	background-color: #2ed573;
+	color: white;
+	width: 20px;
+	height: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+}
+.info-user .container .right-box .tab-show.subscription .order a:hover {
+	color: #2ed573;
+	background-color: white;
+	box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.8);
+-webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.8);
+-moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.8);
+}
+
+
+
+
+
+
+

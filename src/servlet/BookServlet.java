@@ -33,17 +33,29 @@ public class BookServlet extends HttpServlet {
 		String chucNang = request.getParameter("func");
 		String bookID = request.getParameter("id");
 		String pageNumber = request.getParameter("page");
+		
+		request.setAttribute("pageNumber", pageNumber);
 
 		if(chucNang == null && pageNumber != null) {
 			int p = Integer.parseInt(request.getParameter("page"));
-			Map<String, Book> mapListProductByPage = BookDAO.laySachTheoTrang(p);
+			if(p == 1 || p == 0) {
+				request.setAttribute("pageNumber", 1);
+			}
+			else {
+				request.setAttribute("pageNumber", p);
+			}
+			
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
 		if(chucNang.equals("Detail")) {
 			request.setAttribute("bookID", bookID);
 			request.getRequestDispatcher("single.jsp").forward(request, response);
 		}
-		
+		if(chucNang.equals("filter")) {
+			String pageNumber1 = request.getParameter("search");
+			String pageNumber2 = request.getParameter("search");
+			request.getRequestDispatcher("single.jsp").forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

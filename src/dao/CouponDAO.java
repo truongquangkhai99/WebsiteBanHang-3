@@ -115,6 +115,32 @@ public class CouponDAO implements ObjectDAO {
 		return true;
 	}
 
-	
+	public static Coupon getCouponByCode(String Code) {
+		Coupon cp = new Coupon();
+		try {
+			Connection conn = ConnectionUtils.getConnection();
+			ResultSet rs = DBUtils.selectData(conn, "select * from coupons where code='"+Code+"'");
+			while (rs.next()) {
+				String id = rs.getString(1);
+				String code = rs.getString(2);
+				String description = rs.getString(3);
+				Float discount = rs.getFloat(4);
+				Float max_value = rs.getFloat(5);
+				Date valid_from = rs.getDate(6);
+				Date valid_until = rs.getDate(7);
+				Integer count = rs.getInt(8);
+				Boolean is_enable = rs.getBoolean(9);
+				Coupon sp = new Coupon(id, code, description, discount, max_value, valid_from, valid_until, count,
+						is_enable);
+				cp = sp;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return cp;
+	}
 
 }

@@ -76,7 +76,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
           		<label for="signup" class="slide signup">Đăng ký</label>
           		<div class="slider-tab"></div>
 			</div>
-			
 			<div class="form-inner">
           		<form action="login" method="post" class="login">
           		<input type="hidden" name="from" value="${pageContext.request.requestURI}" />

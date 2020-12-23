@@ -105,9 +105,14 @@ public class SecurityFilter implements Filter {
 	        } else if (!isLoggedIn && isLoginRequired()) {
 	            // the user is not logged in, and the requested page requires
 	            // authentication, then forward to the login page
-	            String loginPage = "/login.jsp";
-	            RequestDispatcher dispatcher = httpRequest.getRequestDispatcher(loginPage);
-	            dispatcher.forward(req, resp);
+	        	String loginURL = req.getScheme()+"://"+
+                        req.getServerName()+":"+req.getServerPort()
+                        +"/WebsiteBanHang/login.jsp";
+            	((HttpServletResponse) resp).sendRedirect(loginURL+"?returnURL="+requestURL);
+            	
+//	            String loginPage = "/login.jsp";
+//	            RequestDispatcher dispatcher = httpRequest.getRequestDispatcher(loginPage);
+//	            dispatcher.forward(req, resp);
 	        } else {
 	            // for other requested pages that do not require authentication
 	            // or the user is already logged in, continue to the destination
