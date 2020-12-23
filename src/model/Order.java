@@ -12,7 +12,9 @@ public class Order {
     Float total;
     String user_id;
     String coupon_code;
-    	
+    
+    public Order() {}
+    
 	public Order(String id, Date order_date, Date required_date, Date shipped_date, String status, String comment,
 			Float total, String user_id, String coupon_code) {
 		super();

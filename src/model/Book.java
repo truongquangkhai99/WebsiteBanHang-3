@@ -45,6 +45,14 @@ public class Book {
 		this.category_id = category_id;
 	}
 	
+	public Book(String id, String title, String sale_price, String picture) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.sale_price = sale_price;
+		this.picture = picture;
+	}
+	
 	public String getId() {
 		return id;
 	}

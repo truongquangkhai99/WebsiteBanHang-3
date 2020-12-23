@@ -14,6 +14,7 @@ import java.util.Set;
 
 import conn.ConnectionUtils;
 import model.Order;
+import model.Order_detail;
 import utils.DBUtils;
 
 public class OrderDAO implements ObjectDAO {
@@ -63,7 +64,7 @@ public class OrderDAO implements ObjectDAO {
 		try {
 			Connection conn = ConnectionUtils.getConnection();
 			PreparedStatement statement = conn.prepareStatement("insert into [Orders] values(?,?,?,?,?,?,?,?)");
-			statement.setString(1, order.getOrder_date().toString());
+			statement.setDate(1, order.getOrder_date());
 			statement.setDate(2, order.getRequired_date());
 			statement.setDate(3, order.getShipped_date());
 			statement.setString(4, order.getStatus());
@@ -160,6 +161,62 @@ public class OrderDAO implements ObjectDAO {
 		return true;
 	}
 	
+	public static String getLastestOrderID() {
+		String orderID = null;
+		try {
+			Connection conn = ConnectionUtils.getConnection();
+			ResultSet rs = DBUtils.selectData(conn, "SELECT COUNT(id) FROM orders");
+			while (rs.next()) {
+				orderID = rs.getString(1);
+				return orderID;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+		return orderID;
+	}
 	
+	public static boolean addNewOrder(Order obj) {
+		Order order = obj;
+		mapOrder.put(order.getId(), order);
+		try {
+			Connection conn = ConnectionUtils.getConnection();
+			PreparedStatement statement = conn.prepareStatement("exec add_order ?, ?, ?");
+			statement.setFloat(1, order.getTotal());
+			statement.setString(2, order.getUser_id());
+			statement.setString(3, order.getCoupon_code());
+			statement.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+		return true;
+	}
 
+	public static Map<String, Order> getOrderOfUser(String userId) {
+		Map<String, Order> listOrderOfUser = new HashMap<String, Order>();
+		try {
+			Connection conn = ConnectionUtils.getConnection();
+			ResultSet rs = DBUtils.selectData(conn,"select * from orders where user_id="+userId);
+			while (rs.next()) {
+				String id = rs.getString(1);
+				Date order_date = rs.getDate(2);
+				Date required_date = rs.getDate(3);
+				Date shipped_date = rs.getDate(4);
+				String status = rs.getString(5);
+				String comment = rs.getString(6);
+				Float total = rs.getFloat(7);
+				String user_id = rs.getString(8);
+				String coupon_code = rs.getString(9);
+				listOrderOfUser.put(id, new Order(id, order_date, required_date, shipped_date, status, comment, total, user_id,
+						coupon_code));
+			}
+		} catch (Exception e) {
+			System.out.println("Lỗi ở load danh sách database " + e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
+		return listOrderOfUser;
+	}
 }

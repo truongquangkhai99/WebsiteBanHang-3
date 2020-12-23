@@ -1,3 +1,5 @@
+<%@page import="dao.OrderDAO"%>
+<%@page import="model.Order"%>
 <%@page import="model.User"%>
 <%@page import="dao.UserDAO"%>
 <%@page import="java.util.Map"%>
@@ -6,6 +8,14 @@
 <%
 	User infoUser = (User)session.getAttribute("customerUser"); 
 	Map<String, User> mapListUsers = UserDAO.mapKhachHang;
+	
+	Map<String, Order> listOrdersOfUser = OrderDAO.getOrderOfUser(infoUser.getId());
+%>
+<%!
+	public String formatMoney(float a) {
+		String result = String.format("%,.0f", a);
+     	return result;
+  	}
 %>
 <!DOCTYPE html>
 <html>
@@ -48,11 +58,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="tab-show payment">
 					<h1>Địa chỉ</h1>
 					<h2>Tỉnh/Thành phố</h2>
-					<input type="text" class="input" value="mastercard - 09*****" />
+					<input type="text" class="input" value="Thành phố Hà Nội" />
 					<h2>Quận/Huyện</h2>
-					<input type="text" class="input" value="1234 some streer in a town" />
+					<input type="text" class="input" value="Quận Ba Đình" />
 					<h2>Phường/Xã</h2>
-					<input type="text" class="input" value="333" />
+					<input type="text" class="input" value="Phường Điện Biên" />
 					<h2>Địa chỉ cụ thể</h2>
 					<input type="text" class="input" value="<%=infoUser.getAddress() %>" />
 
@@ -62,51 +72,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="tab-show subscription">
 					<h1>Đơn hàng</h1>
 					<div class="container-order">
+						<% for(Order ord: listOrdersOfUser.values()) { %>
 						<div class="order">
 							<div class="date-order">
 								<p>Ngày đặt</p>
-								<p>Ngày đặt</p>
+								<p><%=ord.getOrder_date() %></p>
 							</div>
 							<div class="status-order">
 								<p>Trạng thái đơn</p>
-								<p>Trạng thái đơn</p>
+								<p><%=ord.getStatus() %></p>
 							</div>
 							<div class="total-money-order">
 								<p>Tổng tiền</p>
-								<p>Trạng thái đơn</p>
+								<p><%=formatMoney(ord.getTotal())%> ₫</p>
 							</div>
 							<a href="#"><i class="fa fa-info" aria-hidden="true"></i></a>
 						</div>
-						<div class="order">
-							<div class="date-order">
-								<p>Ngày đặt</p>
-								<p>Ngày đặt</p>
-							</div>
-							<div class="status-order">
-								<p>Trạng thái đơn</p>
-								<p>Trạng thái đơn</p>
-							</div>
-							<div class="total-money-order">
-								<p>Tổng tiền</p>
-								<p>Trạng thái đơn</p>
-							</div>
-							<a href="#"><i class="fa fa-info" aria-hidden="true"></i></a>
-						</div>
-						<div class="order">
-							<div class="date-order">
-								<p>Ngày đặt</p>
-								<p>Ngày đặt</p>
-							</div>
-							<div class="status-order">
-								<p>Trạng thái đơn</p>
-								<p>Trạng thái đơn</p>
-							</div>
-							<div class="total-money-order">
-								<p>Tổng tiền</p>
-								<p>Trạng thái đơn</p>
-							</div>
-							<a href="#"><i class="fa fa-info" aria-hidden="true"></i></a>
-						</div>
+						<% } %>
 					</div>				
 				</div>
 			</div>

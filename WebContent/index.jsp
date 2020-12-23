@@ -27,6 +27,8 @@
 	} else {
 		totalP = totalPage / 9 + 1;
 	}
+
+	Map<String, Book> mapListProductBuyMax = BookDAO.laySachMuaNhieuNhat();
 %>
 <%!
 	public String percentBook(String a, String b) {
@@ -42,6 +44,12 @@
 		String result = String.format("%,.0f", x);
      	return result;
   	}
+%>
+<%
+	String notify = (String)request.getAttribute("success");
+	if(notify != null){
+		out.print("<script>arlet('"+notify+"')</script>");
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -364,85 +372,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="content-bottom-grid">
 					<h3>BÁN CHẠY NHẤT</h3>
 
+					<%
+						for (Book bookByMax : mapListProductBuyMax.values()) {
+					%>
 					<div class="latest-grid">
 						<div class="news">
-							<a href="single.jsp"><img class="img-responsive"
-								src="images/si.jpg" title="name" alt=""></a>
+							<a href="Book?id=<%=bookByMax.getId()%>&func=Detail"><img class="img-responsive"
+								src="<%=bookByMax.getPicture() %>" title="name" alt=""></a>
 						</div>
 						<div class="news-in">
 							<h6>
-								<a href="single.jsp">Product name here</a>
+								<a href="Book?id=<%=bookByMax.getId()%>&func=Detail"><%=bookByMax.getTitle() %></a>
 							</h6>
-							<p>Description Lorem ipsum</p>
 							<ul>
-								<li>Price: <span>$110</span>
+								<li>Giá: <span><%=formatMoney(bookByMax.getSale_price())%>₫</span>
 								</li>
-								<b>|</b>
-								<li>Country: <span>US</span></li>
 							</ul>
 						</div>
 						<div class="clearfix"></div>
 					</div>
-
-					<div class="latest-grid">
-						<div class="news">
-							<a href="single.jsp"><img class="img-responsive"
-								src="images/si1.jpg" title="name" alt=""></a>
-						</div>
-						<div class="news-in">
-							<h6>
-								<a href="single.jsp">Product name here</a>
-							</h6>
-							<p>Description Lorem ipsum</p>
-							<ul>
-								<li>Price: <span>$110</span>
-								</li>
-								<b>|</b>
-								<li>Country: <span>US</span></li>
-							</ul>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-
-					<div class="latest-grid">
-						<div class="news">
-							<a href="single.jsp"><img class="img-responsive"
-								src="images/si.jpg" title="name" alt=""></a>
-						</div>
-						<div class="news-in">
-							<h6>
-								<a href="single.jsp">Product name here</a>
-							</h6>
-							<p>Description Lorem ipsum</p>
-							<ul>
-								<li>Price: <span>$110</span>
-								</li>
-								<b>|</b>
-								<li>Country: <span>US</span></li>
-							</ul>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-
-					<div class="latest-grid">
-						<div class="news">
-							<a href="single.jsp"><img class="img-responsive"
-								src="images/si1.jpg" title="name" alt=""></a>
-						</div>
-						<div class="news-in">
-							<h6>
-								<a href="single.jsp">Product name here</a>
-							</h6>
-							<p>Description Lorem ipsum</p>
-							<ul>
-								<li>Price: <span>$110</span>
-								</li>
-								<b>|</b>
-								<li>Country: <span>US</span></li>
-							</ul>
-						</div>
-						<div class="clearfix"></div>
-					</div>
+					<%
+						}
+					%>
 				</div>
 
 				<!---->

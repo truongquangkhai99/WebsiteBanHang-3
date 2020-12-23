@@ -255,4 +255,29 @@ public class BookDAO implements ObjectDAO {
 
 		return map;
 	}
+	
+	public static Map<String, Book> laySachMuaNhieuNhat() {
+		Map<String, Book> map = new HashMap<>();
+		try {
+			Connection conn = ConnectionUtils.getConnection();
+			ResultSet rs = DBUtils.selectData(conn,"select top 4 book_id, books.title, books.sale_price, books.picture \n"
+					+ "from order_details inner join books on order_details.book_id = books.id \n"
+					+ "group by book_id, books.id, books.title, books.sale_price, books.picture \n"
+					+ "order by book_id asc");
+			while (rs.next()) {
+				String id = rs.getString(1);
+				String title = rs.getString(2);
+				String sale_price = rs.getString(3);
+				String picture = rs.getString(4);
+				Book sp = new Book(id, title, sale_price, picture);
+				map.put(sp.getId(), sp);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return map;
+	}
 }

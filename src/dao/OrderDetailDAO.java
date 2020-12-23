@@ -128,6 +128,23 @@ public class OrderDetailDAO implements ObjectDAO {
 		return true;
 	}
 	
+
 	
+	public static boolean addNewOrder(Order_detail obj) {
+		mapOrder.put(obj.getId(), obj);
+		try {
+			Connection conn = ConnectionUtils.getConnection();
+			PreparedStatement statement = conn.prepareStatement("exec add_order_detail ?, ?, ?,?");
+			statement.setInt(1, obj.getQuantity());
+			statement.setFloat(2, obj.getPrice());
+			statement.setString(3, obj.getOrder_id());
+			statement.setString(4, obj.getBook_id());
+			statement.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+		return true;
+	}
 
 }

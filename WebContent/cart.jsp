@@ -1,3 +1,4 @@
+<%@page import="model.User"%>
 <%@page import="model.Coupon"%>
 <%@page import="model.CartItem"%>
 <%@page import="model.Book"%>
@@ -6,7 +7,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	List<CartItem> listBooks = (List) session.getAttribute("orderCart");   
+	List<CartItem> listBooks = (List) session.getAttribute("orderCart");
+	User infoUser = (User)session.getAttribute("customerUser"); 
 
 	float percentCoupon = 0;
 	String descriptionCoupon = "";
@@ -227,7 +229,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tổng thanh toán</strong>
                                             <h5 class="font-weight-bold"><% out.print(formatMoney(totalPay(sum, percentCoupon))); %> ₫</h5> 
                                         </li>
-                                    </ul><a href="order" class="btn btn-dark rounded-pill py-2 btn-block">Mua hàng</a>
+                                    </ul>
+                                    <form action="OrderServlet" method="post">
+                                    	<input style="visibility: hidden;" name="userId" value="<%=infoUser.getId() %>" />
+                                    	<input style="visibility: hidden;" name="totalMoney" value="<% out.print(totalPay(sum, percentCoupon)); %>" />
+                                    	<input style="visibility: hidden;" name="couponCode" value="<%=codeCoupon %>" />
+                                    	<button type="submit" class="btn btn-dark rounded-pill py-2 btn-block">Mua hàng</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

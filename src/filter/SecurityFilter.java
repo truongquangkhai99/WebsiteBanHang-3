@@ -43,7 +43,7 @@ public class SecurityFilter implements Filter {
     // private HttpServletResponse httpRespone;
 	 
     private static final String[] loginRequiredURLs = {
-            "/view_profile", "/edit_profile", "/update_profile"
+            "cart", "/edit_profile", "/update_profile"
     };
 	@Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
