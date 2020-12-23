@@ -38,6 +38,15 @@ public class CouponDAO implements ObjectDAO {
 		return true;
 	}
 
+	public static Coupon getCouponByCode(String code) {
+		mapCoupon = layDuLieuTuDatabase();
+		for(Coupon coupon: mapCoupon.values()) {
+			if(coupon.getCode().equals(code))
+				return coupon;
+		}
+		return null;
+	}
+
 	public static Map<String, Coupon> layDuLieuTuDatabase() {
 		Map<String, Coupon> map = new HashMap<>();
 		try {

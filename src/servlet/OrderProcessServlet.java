@@ -10,10 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.CouponDAO;
 import dao.OrderDAO;
 import dao.OrderDetailDAO;
 import dao.UndoDAO;
 import dao.UserDAO;
+import model.Coupon;
 import model.Order;
 import model.Order_detail;
 import model.User;
@@ -44,9 +46,11 @@ public class OrderProcessServlet extends HttpServlet {
 				Order order = OrderDAO.mapOrder.get(orderID);
 				User user =UserDAO.getUserByID(order.getUser_id());
 				List<Order_detail> detail = OrderDetailDAO.getDetailByOrderID(orderID);
+				Coupon coupon = CouponDAO.getCouponByCode(order.getCoupon_code());
 				request.setAttribute("order", order);
 				request.setAttribute("user", user);
 				request.setAttribute("detail", detail);
+				request.setAttribute("coupon", coupon);
 				request.getRequestDispatcher("order/info.jsp").forward(request, response);
 		}
 	}
