@@ -10,10 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.CouponDAO;
 import dao.OrderDAO;
 import dao.OrderDetailDAO;
 import dao.UndoDAO;
 import dao.UserDAO;
+import model.Coupon;
 import model.Order;
 import model.Order_detail;
 import model.User;
@@ -44,9 +46,12 @@ public class OrderProcessServlet extends HttpServlet {
 				Order order = OrderDAO.mapOrder.get(orderID);
 				User user =UserDAO.getUserByID(order.getUser_id());
 				List<Order_detail> detail = OrderDetailDAO.getDetailByOrderID(orderID);
+				Coupon coupon = CouponDAO.getCouponByCode(order.getCoupon_code());
+				if(coupon.getId() == null) coupon = null;
 				request.setAttribute("order", order);
 				request.setAttribute("user", user);
 				request.setAttribute("detail", detail);
+				request.setAttribute("coupon", coupon);
 				request.getRequestDispatcher("order/info.jsp").forward(request, response);
 		}
 	}
@@ -83,23 +88,11 @@ public class OrderProcessServlet extends HttpServlet {
 		}else
 			//chức năng sửa đơn hàng
 			if(chucNang.equals("Edit")){
-			String productName=request.getParameter("pdName");
-			String customerName=request.getParameter("name");
-			String price=request.getParameter("price");
-			String orderID=request.getParameter("masp");
-			String date=request.getParameter("date");
-			Order kh = new Order(orderID, null, null, null, productName, customerName, null, date, price);
-			new OrderDAO().edit(maKH, kh);
-		}else
-			//chức năng thêm đơn hàng
-			if(chucNang.equals("Add")){
-				String productName=request.getParameter("pdName");
-				String price=request.getParameter("price");
-				String customerName=request.getParameter("name");
-				String date=request.getParameter("date");
-				String orderID="DH"+new OrderDAO().random(9000);
-				Order kh = new Order(orderID, null, null, null, productName, customerName, null, date, price);
-			new OrderDAO().add(kh);
+			String orderID =request.getParameter("id");
+			String order_status =request.getParameter("order_status");
+			Order order = OrderDAO.mapOrder.get(orderID);
+			order.setStatus(order_status);
+			new OrderDAO().edit(orderID, order);
 		}else
 			//chức năng thêm đơn hàng
 			if(chucNang.equals("Detail")){

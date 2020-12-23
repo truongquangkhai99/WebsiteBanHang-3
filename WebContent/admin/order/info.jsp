@@ -1,3 +1,4 @@
+<%@page import="model.Coupon"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.util.List"%>
 <%@page import="model.Order_detail"%>
@@ -18,6 +19,7 @@ pageEncoding="utf-8"%>
 <body>
 <%
 	User user = (User)request.getAttribute("user");
+	Coupon coupon = (Coupon)request.getAttribute("coupon");
 	Order od = (Order)request.getAttribute("order");
 	List<Order_detail> listDetail = (List<Order_detail>)request.getAttribute("detail");
     float tongTien = 0;
@@ -105,8 +107,20 @@ pageEncoding="utf-8"%>
             <td></td>
             <td></td>
             <td><b>Khuyến mãi:</b></td>
+            <%
+            	if(coupon == null){
+            %>
             <td style="color:red"><b></b></td>
             <td><b>-0 VNĐ</b></td>
+            <%
+            	}
+            	else{
+           	%>
+            		<td style="color:red"><b><%out.print(coupon.getCode()); %></b></td>
+                    <td><b>-<%out.print(formatter.format(tongTien*coupon.getDiscount()*0.01));%> VNĐ</b></td>
+            <%
+            	}
+            %>
         </tr>
         <tr>
             <td></td>
