@@ -77,7 +77,7 @@ pageEncoding="utf-8"%>
     	for(Order_detail dt: listDetail){
     		%>
     		<tr>
-                <td style="width:80px"><%dt.getBook_id(); %></td>
+                <td style="width:80px"><%out.print(dt.getBook_id()); %></td>
                     <%Book book = BookDAO.mapSanPham.get(dt.getBook_id());%>
                     <td style="width:250px"><a href="#"><%out.print(book.getTitle()); %></a></td>
                     <td style="width:150px"><img src="../<%out.print(book.getPicture());%>" class="img-responsive" style="width: 150px; height: auto"></td>
