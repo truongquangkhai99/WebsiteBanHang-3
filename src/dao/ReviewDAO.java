@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -109,5 +110,23 @@ public class ReviewDAO implements ObjectDAO {
 		}
 
 		return map;
+	}
+	
+	public static ArrayList<String> getListReivews(String idBook) {
+		ArrayList<String> list = new ArrayList<String>();
+		try {
+			Connection conn = ConnectionUtils.getConnection();
+			ResultSet rs = DBUtils.selectData(conn, "select count(star) from reviews where book_id="+idBook+" group by star order by star desc");
+			while (rs.next()) {
+				String x = rs.getString(1);
+				list.add(rs.getString(1));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return list;
 	}
 }

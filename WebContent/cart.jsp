@@ -1,3 +1,4 @@
+<%@page import="model.Coupon"%>
 <%@page import="model.CartItem"%>
 <%@page import="model.Book"%>
 <%@page import="java.util.List"%>
@@ -6,6 +7,18 @@
     pageEncoding="UTF-8"%>
 <%
 	List<CartItem> listBooks = (List) session.getAttribute("orderCart");   
+
+	float percentCoupon = 0;
+	String descriptionCoupon = "";
+	String codeCoupon = "";
+
+	Coupon cp = (Coupon) request.getAttribute("valueCoupon");
+	if(cp != null ){
+		percentCoupon = cp.getDiscount();
+		descriptionCoupon = cp.getDescription();
+		codeCoupon = cp.getCode();
+	}
+	
 %>
 <%!
 	public String formatMoney(String a) {
@@ -19,6 +32,12 @@
 		float x = Float.parseFloat(a);  
 
      	return x*b;
+  	}
+%>
+<%!
+	public String totalPay(float a, float b) {
+
+     	return Float.toString(a - (a*b/100));
   	}
 %>
 <!DOCTYPE html>
@@ -41,6 +60,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link href='http://fonts.googleapis.com/css?family=Cabin:400,500,600,700' rel='stylesheet' type='text/css'>
 <!--//fonts-->
 <!--//slider-script-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>$(document).ready(function(c) {
 	$('.alert-close').on('click', function(c){
 		$('.message').fadeOut('slow', function(c){
@@ -155,7 +175,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                                     </td>
                                                     <td class="align-middle">
                                                     	<form action="CartServlet?bookId=<%=sp.getBook().getId()%>&action=delete" method="post">
-                                                        	<button type="submit" class="btn btn-danger">Xóa</button>
+                                                        	<button type="submit" class="btn btn-danger" onclick="onDeleteBook()">Xóa</button>
 														</form>
                                                     </td>
                                                 </tr> 
@@ -168,17 +188,34 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <!-- End -->
                             </div>
                         </div>
+                        <script type="text/javascript">
+                        	$(document).ready(function onDeleteBook(){
+                        		Swal.fire({
+                      			  position: 'top-end',
+                      			  icon: 'success',
+                      			  title: 'Cập nhập giỏ hàng thành công',
+                      			  showConfirmButton: false,
+                      			  timer: 1500
+                      			})
+                      		});
+                        </script>
 
                         <div class="row bg-white rounded shadow-sm">
                             <div class="col-lg-6">
                                 <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Voucher</div>
                                 <div class="p-4">
-                                    <div class="input-group mb-4 border rounded-pill p-2">
-                                        <input type="text" placeholder="Nhập Voucher" aria-describedby="button-addon3" class="form-control border-0">
-                                        <div class="input-group-append border-0">
-                                            <button id="button-addon3" type="button" class="btn btn-dark px-4 rounded-pill"><i class="fa fa-gift mr-2"></i>Sử dụng</button>
-                                        </div>
-                                    </div>
+                                    <form action="CouponProcess?action=get" method="post">
+                                   		<div class="input-group mb-4 border rounded-pill p-2">
+                                        	<input value="<%=codeCoupon %>" type="text" placeholder="Nhập Voucher" aria-describedby="button-addon3" class="form-control border-0" name="valuecoupon">
+                                        	<div class="input-group-append border-0">
+                                            	<button id="button-addon3" type="submit" class="btn btn-dark px-4 rounded-pill">
+                                            		<i class="fa fa-gift mr-2"></i>Sử dụng
+                                            	</button>
+                                        	</div>
+                                    	</div>
+                                	</form>
+                                	<p><%=descriptionCoupon %></p>
+                                	<p></p>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -188,7 +225,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tổng tiền hàng</strong><strong><% out.print(formatMoney(Float.toString(sum))); %> ₫</strong></li>
                                         <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Phí vận chuyển</strong><strong>Free ship</strong></li>
                                         <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tổng thanh toán</strong>
-                                            <h5 class="font-weight-bold"><% out.print(formatMoney(Float.toString(sum))); %> ₫</h5>
+                                            <h5 class="font-weight-bold"><% out.print(formatMoney(totalPay(sum, percentCoupon))); %> ₫</h5> 
                                         </li>
                                     </ul><a href="order" class="btn btn-dark rounded-pill py-2 btn-block">Mua hàng</a>
                                 </div>

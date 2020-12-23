@@ -113,11 +113,18 @@ public class CartServlet extends HttpServlet {
 				Book book = BookDAO.mapSanPham.get(id);
 				
 				List<CartItem> listBooksInCart = (List) session.getAttribute("orderCart");
-				for(CartItem _book : listBooksInCart) {
-					if(_book.getBook().getId() == book.getId()) {
-						listBooksInCart.remove(_book);
+				if(listBooksInCart.size() == 1) {
+					List<CartItem> listEmpty = new ArrayList<CartItem>();
+					listBooksInCart = listEmpty;
+				}
+				else {
+					for(CartItem _book : listBooksInCart) {
+						if(_book.getBook().getId() == book.getId()) {
+							listBooksInCart.remove(_book);
+						}
 					}
 				}
+				
 				session.setAttribute("orderCart", listBooksInCart);
 				response.sendRedirect("cart.jsp");
 			}

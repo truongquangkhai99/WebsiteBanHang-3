@@ -27,12 +27,12 @@
 </head>
 <body>
 	<div class="header-bottom">
-		<div class="top-nav">
+		<!-- <div class="top-nav">
 			<ul class="megamenu skyblue">
 				<li class="active grid"><a href="index.jsp">Sách</a></li>
 				<li><a class="pink" href="index.jsp">Sách giảm giá</a></li>
 			</ul>
-		</div>
+		</div> -->
 		<div class="cart icon1 sub-icon1">
 			<%
 				int count = 0;

@@ -1,4 +1,22 @@
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="model.Review"%>
+<%@page import="dao.ReviewDAO"%>
+<%@page import="model.User"%>
+<%@page import="dao.UserDAO"%>
+<%@page import="java.util.Set"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import=" java.util.HashMap"%>
+<%@page import=" java.util.Map"%>
+<%@page import=" java.time.format.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>
+<%
+	Map<String, Review> mapListReviews = ReviewDAO.mapReview;
+	
+	String x = request.getParameter("id");
+
+	Map<String, Review> mapListReview = ReviewDAO.layDuLieuDanhGiaCuaSach(x);
+	ArrayList<String> arrayStar = ReviewDAO.getListReivews(x);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,52 +84,53 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 				<span class="stars__average-rating-score"> 4.7 / 5 </span>
 			</div>
-			<div class="average-ratings__total-customers">40  đánh giá</div>
+			<div class="average-ratings__total-customers"><%=mapListReview.size() %> đánh giá</div>
 		</div>
 
+		<%if(!arrayStar.isEmpty()) { %>	
 		<div class="reviews__breakdown">
 			<div class="reviews-breakdown__wrapper">
 				<div class="reviews__single-star-average">
 					<div class="single-star-average__amount">5 star</div>
 					<div class="single-star-average__progress-bar">
-						<progress class="progress-bar__data" max="100" value="84"></progress>
+						<progress class="progress-bar__data" max="<%=mapListReview.size() %>" value="<%=arrayStar.get(0) %>"></progress>
 					</div>
-					<div class="single-star-average__percentage">84%</div>
-				</div>
-
+					<div class="single-star-average__percentage"><%=arrayStar.get(0) %>/<%=mapListReview.size() %></div>
+				</div> 
 				<div class="reviews__single-star-average">
 					<div class="single-star-average__amount">4 star</div>
 					<div class="single-star-average__progress-bar">
-						<progress class="progress-bar__data" max="100" value="9"></progress>
+						<progress class="progress-bar__data" max="<%=mapListReview.size() %>" value="<%=arrayStar.get(1) %>"></progress>
 					</div>
-					<div class="single-star-average__percentage">9%</div>
+					<div class="single-star-average__percentage"><%=arrayStar.get(1) %>/<%=mapListReview.size() %></div>
 				</div>
 
 				<div class="reviews__single-star-average">
 					<div class="single-star-average__amount">3 star</div>
 					<div class="single-star-average__progress-bar">
-						<progress class="progress-bar__data" max="100" value="4"></progress>
+						<progress class="progress-bar__data" max="<%=mapListReview.size() %>" value="<%=arrayStar.get(2) %>"></progress>
 					</div>
-					<div class="single-star-average__percentage">4%</div>
+					<div class="single-star-average__percentage"><%=arrayStar.get(2) %>/<%=mapListReview.size() %></div>
 				</div>
 
 				<div class="reviews__single-star-average">
 					<div class="single-star-average__amount">2 star</div>
 					<div class="single-star-average__progress-bar">
-						<progress class="progress-bar__data" max="100" value="2"></progress>
+						<progress class="progress-bar__data" max="<%=mapListReview.size() %>" value="<%=arrayStar.get(3) %>"></progress>
 					</div>
-					<div class="single-star-average__percentage">2%</div>
+					<div class="single-star-average__percentage"><%=arrayStar.get(3) %>/<%=mapListReview.size() %></div>
 				</div>
 
 				<div class="reviews__single-star-average">
 					<div class="single-star-average__amount">1 star</div>
 					<div class="single-star-average__progress-bar">
-						<progress class="progress-bar__data" max="100" value="1"></progress>
+						<progress class="progress-bar__data" max="<%=mapListReview.size() %>" value="<%=arrayStar.get(4) %>"></progress>
 					</div>
-					<div class="single-star-average__percentage">1%</div>
+					<div class="single-star-average__percentage"><%=arrayStar.get(4) %>/<%=mapListReview.size() %></div>
 				</div>
 			</div>
 		</div>
+		<% }%>
 	</div>
 </body>
 </html>

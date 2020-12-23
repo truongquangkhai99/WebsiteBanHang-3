@@ -1,3 +1,9 @@
+<%@page import="dao.AuthorDAO"%>
+<%@page import="dao.CategoryDAO"%>
+<%@page import="dao.PublisherDAO"%>
+<%@page import="model.Author"%>
+<%@page import="model.Category"%>
+<%@page import="model.Publisher"%>
 <%@page import="java.util.Map"%>
 <%@page import="dao.BookDAO"%>
 <%@page import="model.Book"%>
@@ -6,8 +12,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	Map<String, Book> mapListProduct = BookDAO.mapSanPham;
+	Map<String, Publisher> mapListPublisher = PublisherDAO.mapPublisher;
+	Map<String, Category> mapListCategory = CategoryDAO.mapLoaiSanPham;
+	Map<String, Author> mapListAuthor = AuthorDAO.mapTacGia;
 
-	Map<String, Book> mapListProductByPage = BookDAO.laySachTheoTrang(1);
+	int pageN = (request.getAttribute("pageNumber")==null)?1:(int)request.getAttribute("pageNumber");
+
+	Map<String, Book> mapListProductByPage = BookDAO.laySachTheoTrang(pageN);
 
 	int totalPage = mapListProduct.size();
 	int totalP;
@@ -170,13 +181,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="demo">
 					<nav class="pagination-outer" aria-label="Page navigation">
 						<ul class="pagination">
-							<li class="page-item"><a href="#" class="page-link"
-								aria-label="Previous"> <span aria-hidden="true">«</span>
-							</a></li>
+							<%if(pageN == 1){ %>
+								<li class="page-item"><a href="Book?page=<%=pageN %>" class="page-link"
+									aria-label="Previous"> <span aria-hidden="true">«</span>
+								</a></li>
+							<%} else { %>
+								<li class="page-item"><a href="Book?page=<%=pageN-1 %>" class="page-link"
+									aria-label="Previous"> <span aria-hidden="true">«</span>
+								</a></li>
+							<% } %>
 							<li class="page-item" style="display: flex; justify-content: center; align-items: center; font-size: 18px; color: #fe1739;">
-								<p><% out.print(1);%></p>
+								<p><% out.print(pageN);%></p>
 							</li>
-							<li class="page-item"><a href="#" class="page-link"
+							<li class="page-item"><a href="Book?page=<%=pageN+1 %>" class="page-link"
 								aria-label="Next"> <span aria-hidden="true">»</span>
 							</a></li>
 						</ul>
@@ -195,19 +212,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</ul>
 
 						<div class="single-bottom">
-							<a href="#"> <input type="checkbox" id="brand" value="">
+							<a href="Book?search=>500&func=filter"> <input type="checkbox" id="brand" value="">
 								<label for="brand"><span></span><b>500.000₫ - Lớn
 										hơn</b></label>
-							</a> <a href="#"> <input type="checkbox" id="brand1" value="">
+							</a> <a href="Book?search=400-500&func=filter"> <input type="checkbox" id="brand1" value="">
 								<label for="brand1"><span></span> <b>500.000₫ -
 										400.000₫</b></label>
-							</a> <a href="#"> <input type="checkbox" id="brand2" value="">
+							</a> <a href="Book?search=200-400&func=filter"> <input type="checkbox" id="brand2" value="">
 								<label for="brand2"><span></span> <b>400.000₫ -
 										200.000₫</b></label>
-							</a> <a href="#"> <input type="checkbox" id="brand3" value="">
+							</a> <a href="Book?search=50-200&func=filter"> <input type="checkbox" id="brand3" value="">
 								<label for="brand3"><span></span> <b>200.000₫ -
 										50.000₫</b></label>
-							</a> <a href="#"> <input type="checkbox" id="brand4" value="">
+							</a> <a href="Book?search=<50&func=filter"> <input type="checkbox" id="brand4" value="">
 								<label for="brand4"><span></span><b>50.000₫ - Thấp
 										hơn</b></label>
 							</a>
@@ -222,13 +239,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</ul>
 
 						<div class="single-bottom">
-							<a href="#"> <input type="checkbox" id="nike" value="">
-								<label for="nike"><span></span><b>Tâm lý</b></label>
-							</a> <a href="#"> <input type="checkbox" id="nike1" value="">
-								<label for="nike1"><span></span> <b>Tình cảm</b></label>
-							</a> <a href="#"> <input type="checkbox" id="nike2" value="">
-								<label for="nike2"><span></span><b>Thiếu nhi</b></label>
-							</a>
+							<%
+								for (Category category : mapListCategory.values()) {
+							%>
+							<a href="Book?search=<%=category.getName() %>&func=filter"> <input type="checkbox" id="nike" value="">
+								<label for="nike"><span></span><b><%=category.getName() %></b></label>
+							</a> 
+							<%
+								}
+							%>
 						</div>
 					</div>
 
@@ -240,13 +259,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</ul>
 
 						<div class="w_nav2" style="display: flex; flex-direction: column;">
-							<a href="#"> <input type="checkbox" id="nike" value="">
-								<label for="nike"><span></span><b>AA</b></label>
-							</a> <a href="#"> <input type="checkbox" id="nike1" value="">
-								<label for="nike1"><span></span> <b>B</b></label>
-							</a> <a href="#"> <input type="checkbox" id="nike2" value="">
-								<label for="nike2"><span></span><b>C</b></label>
-							</a>
+							<%
+								for (Author author : mapListAuthor.values()) {
+							%>
+							<a href="Book?search=<%=author.getName() %>&func=filter"> <input type="checkbox" id="nike" value="">
+								<label for="nike"><span></span><b><%=author.getName() %></b></label>
+							</a> 
+							<%
+								}
+							%>
 						</div>
 					</div>
 
@@ -258,17 +279,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</ul>
 
 						<div class="single-bottom">
-							<a href="#"> <input type="checkbox" id="up" value="">
-								<label for="up"><span></span><b>A</b></label>
-							</a> <a href="#"> <input type="checkbox" id="up1" value="">
-								<label for="up1"><span></span> <b>B</b></label>
-							</a> <a href="#"> <input type="checkbox" id="up2" value="">
-								<label for="up2"><span></span> <b>B</b></label>
-							</a> <a href="#"> <input type="checkbox" id="up3" value="">
-								<label for="up3"><span></span> <b>B</b></label>
-							</a> <a href="#"> <input type="checkbox" id="up4" value="">
-								<label for="up4"><span></span><b>B</b></label>
+							<%
+								for (Publisher publisher : mapListPublisher.values()) {
+							%>
+							<a href="Book?search=<%=publisher.getName() %>&func=filter"> <input type="checkbox" id="up" value="">
+								<label for="up"><span></span><b><%=publisher.getName() %></b></label>
 							</a>
+							<%
+								}
+							%>
 						</div>
 					</div>
 

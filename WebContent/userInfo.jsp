@@ -1,5 +1,12 @@
+<%@page import="model.User"%>
+<%@page import="dao.UserDAO"%>
+<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="utf-8"%>
+<%
+	User infoUser = (User)session.getAttribute("customerUser"); 
+	Map<String, User> mapListUsers = UserDAO.mapKhachHang;
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,91 +25,89 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="left-box">
 				<nav>
 					<a onclick="tabs(0)" class="tab active"> <i class="fa fa-user"></i> </a> 
-					<a onclick="tabs(1)" class="tab"> <i class="fa fa-user"></i> </a> 
-					<a onclick="tabs(2)" class="tab"> <i class="fa fa-credit-card"></i> </a> 
-					<a onclick="tabs(3)" class="tab"> <i class="fa fa-tasks"></i> </a> 
-					<a onclick="tabs(4)" class="tab"> <i class="fa fa-cog"></i> </a>
+					<a onclick="tabs(1)" class="tab"> <i class="fa fa-map-marker"></i> </a> 
+					<a onclick="tabs(2)" class="tab"> <i class="fa fa-shopping-cart"></i> </a> 
 				</nav>
 			</div>
 
 			<div class="right-box">
 				<div class="tab-show profile">
-					<h1>Personal Info</h1>
-					<h2>Full name</h2>
-					<input type="text" class="input" value="hiu" />
-					<h2>Birth day</h2>
-					<input type="text" class="input" value="14/12/1999" />
-					<h2>Gender</h2>
-					<input type="text" class="input" value="Female" />
-					<h2>Email</h2>
-					<input type="text" class="input" value="a@gmail.com" />
-					<h2>Password</h2>
-					<input type="password" class="input" value="om" />
+					<form action="UserServlet?userId=<%=infoUser.getId() %>&action=edit" method="post">
+						<h1>Thông tin người dùng</h1>
+						<h2>Tên</h2>
+						<input type="text" name="userName" class="input" value="<%=infoUser.getName() %>" />
+						<h2>Số điện thoại</h2>
+						<input type="text" name="userPhone" class="input" value="<%=infoUser.getPhone() %>" />
+						<h2>Email</h2>
+						<input type="text" name="userEmail" class="input" value="<%=infoUser.getEmail() %>" />
 
-					<button class="btn">Update</button>
+						<button type="submit" class="btn">Cập nhập</button>
+					</form>
 				</div>
 
 				<div class="tab-show payment">
-					<h1>payment Info</h1>
-					<h2>payment method</h2>
+					<h1>Địa chỉ</h1>
+					<h2>Tỉnh/Thành phố</h2>
 					<input type="text" class="input" value="mastercard - 09*****" />
-					<h2>Billing address</h2>
+					<h2>Quận/Huyện</h2>
 					<input type="text" class="input" value="1234 some streer in a town" />
-					<h2>Zipcode</h2>
+					<h2>Phường/Xã</h2>
 					<input type="text" class="input" value="333" />
-					<h2>Billing Date</h2>
-					<input type="text" class="input" value="a@gmail.com" />
-					<h2>Redeen Card</h2>
-					<input type="password" class="input" value="enter the gift code" />
+					<h2>Địa chỉ cụ thể</h2>
+					<input type="text" class="input" value="<%=infoUser.getAddress() %>" />
 
-					<button class="btn">Update</button>
+					<button class="btn">Cập nhập</button>
 				</div>
 
 				<div class="tab-show subscription">
-					<h1>payment Info</h1>
-					<h2>payment method</h2>
-					<p>May 12, 2020</p>
-					<h2>Next charges</h2>
-					<p>
-						32VND <span>includes tax</span>
-					</p>
-					<h2>Limit plan</h2>
-					<p>Monthly</p>
-					<p>152vnd</p>
-
-					<button class="btn">Update</button>
-				</div>
-
-				<div class="tab-show privacy">
-					<h1>privacy setting</h1>
-					<h2>manage email noti</h2>
-					<p></p>
-					<p>May 12, 2020</p>
-					<h2>Next charges</h2>
-					<p>
-						32VND <span>includes tax</span>
-					</p>
-					<h2>Limit plan</h2>
-					<p>Monthly</p>
-					<p>152vnd</p>
-
-					<button class="btn">Update</button>
-				</div>
-
-				<div class="tab-show settings">
-					<h1>privacy setting</h1>
-					<h2>manage email noti</h2>
-					<p></p>
-					<p>May 12, 2020</p>
-					<h2>Next charges</h2>
-					<p>
-						32VND <span>includes tax</span>
-					</p>
-					<h2>Limit plan</h2>
-					<p>Monthly</p>
-					<p>152vnd</p>
-
-					<button class="btn">Update</button>
+					<h1>Đơn hàng</h1>
+					<div class="container-order">
+						<div class="order">
+							<div class="date-order">
+								<p>Ngày đặt</p>
+								<p>Ngày đặt</p>
+							</div>
+							<div class="status-order">
+								<p>Trạng thái đơn</p>
+								<p>Trạng thái đơn</p>
+							</div>
+							<div class="total-money-order">
+								<p>Tổng tiền</p>
+								<p>Trạng thái đơn</p>
+							</div>
+							<a href="#"><i class="fa fa-info" aria-hidden="true"></i></a>
+						</div>
+						<div class="order">
+							<div class="date-order">
+								<p>Ngày đặt</p>
+								<p>Ngày đặt</p>
+							</div>
+							<div class="status-order">
+								<p>Trạng thái đơn</p>
+								<p>Trạng thái đơn</p>
+							</div>
+							<div class="total-money-order">
+								<p>Tổng tiền</p>
+								<p>Trạng thái đơn</p>
+							</div>
+							<a href="#"><i class="fa fa-info" aria-hidden="true"></i></a>
+						</div>
+						<div class="order">
+							<div class="date-order">
+								<p>Ngày đặt</p>
+								<p>Ngày đặt</p>
+							</div>
+							<div class="status-order">
+								<p>Trạng thái đơn</p>
+								<p>Trạng thái đơn</p>
+							</div>
+							<div class="total-money-order">
+								<p>Tổng tiền</p>
+								<p>Trạng thái đơn</p>
+							</div>
+							<a href="#"><i class="fa fa-info" aria-hidden="true"></i></a>
+						</div>
+					</div>				
 				</div>
 			</div>
 		</div>

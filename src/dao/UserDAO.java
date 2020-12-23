@@ -18,6 +18,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import conn.ConnectionUtils;
+import model.Book;
 import model.User;
 import utils.DBUtils;
 
@@ -273,5 +274,33 @@ public class UserDAO implements ObjectDAO {
 
 	public static void setMapKhachHang(Map<String, User> mapKhachHang) {
 		UserDAO.mapKhachHang = mapKhachHang;
+	}
+	
+	public boolean editUser(String id,Object obj) {
+		User us = (User) obj;
+		mapKhachHang.replace(id, us);
+		String sql = "update users set username=?,password=?,name=?,address=?,phone=?,email=?,picture=?,province_code=?,district_code=?,ward_code=?,is_admin=? where id=?";
+		
+		try {
+			Connection connect = ConnectionUtils.getConnection();
+			PreparedStatement ppstm = connect.prepareStatement(sql);
+			ppstm.setString(1, us.getUsername());
+			ppstm.setString(2, us.getPassword());
+			ppstm.setString(3, us.getName());
+			ppstm.setString(4, us.getAddress());
+			ppstm.setString(5, us.getPhone());
+			ppstm.setString(6, us.getEmail());
+			ppstm.setString(7, us.getPicture());
+			ppstm.setString(8, us.getProvince_code());
+			ppstm.setString(9, us.getDistrict_code());
+			ppstm.setString(10, us.getWard_code());
+			ppstm.setBoolean(11, us.getRole());
+			ppstm.setString(12, id);
+			ppstm.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println("error when edit customer :" + e.getMessage());
+		}
+		return false;
 	}
 }

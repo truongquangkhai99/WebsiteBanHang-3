@@ -13,6 +13,8 @@ public class Coupon {
 	Integer count;
 	Boolean is_enable;
 	
+	public Coupon() {}
+	
 	public Coupon(String id, String code, String description, Float discount, Float max_value, Date valid_from,
 			Date valid_until, Integer count, Boolean is_enable) {
 		super();
