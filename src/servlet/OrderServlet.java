@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,14 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.sun.corba.se.pept.transport.Connection;
-
 import dao.OrderDAO;
 import dao.OrderDetailDAO;
 import model.CartItem;
 import model.Order;
 import model.Order_detail;
-import utils.DBUtils;
 
 @WebServlet("/OrderServlet")
 public class OrderServlet extends HttpServlet {
@@ -57,13 +53,12 @@ public class OrderServlet extends HttpServlet {
 			}
 			
 			session.setAttribute("orderCart", null);
-			request.setAttribute("success", "Đặt hàng thành công");
-			request.getRequestDispatcher("index.jsp").forward(request, response);
+			request.setAttribute("success", "Ä�áº·t hÃ ng thÃ nh cÃ´ng");
+			response.sendRedirect("account.jsp");
 		} catch (Exception e) {
 			// TODO: handle exception
+			response.sendRedirect("cart.jsp");
 		}
-		
-		response.sendRedirect("cart.jsp");
 	}
 
 }

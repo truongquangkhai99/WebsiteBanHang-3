@@ -165,7 +165,7 @@ public class OrderDAO implements ObjectDAO {
 		String orderID = null;
 		try {
 			Connection conn = ConnectionUtils.getConnection();
-			ResultSet rs = DBUtils.selectData(conn, "SELECT COUNT(id) FROM orders");
+			ResultSet rs = DBUtils.selectData(conn, "SELECT TOP 1 * FROM orders ORDER BY id DESC");
 			while (rs.next()) {
 				orderID = rs.getString(1);
 				return orderID;
@@ -191,6 +191,7 @@ public class OrderDAO implements ObjectDAO {
 			System.out.println(e.getMessage());
 			return false;
 		}
+		mapOrder = getLoadOrderDTB();
 		return true;
 	}
 

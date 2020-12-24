@@ -272,7 +272,6 @@
 				<thead>
 					<tr>
 						<th>#</th>
-						<th>Tên sản phẩm</th>
 						<th>Khách hàng</th>
 						<th>Trạng thái</th>
 						<th>Ngày đặt hàng</th>
@@ -290,7 +289,6 @@
 					%>
 					<tr>
 						<td><%=count%></td>
-						<td><%out.print(new BookDAO().getNameBook(od.getId()));%></td>
 						<td><%out.print(UserDAO.getNameCustomer(od.getUser_id()));%></td>
 						<td><span style="font-size:50" class="status text-info">&bull;</span><%=od.getStatus()%></td>
 						<td><%=od.getOrder_date()%></td>
